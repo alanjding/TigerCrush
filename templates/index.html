@@ -12,7 +12,7 @@
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container"> <a class="navbar-brand" href="#">
         <i class="fa fa-heart d-inline fa-lg"></i>
-        <b>TigerMatch</b>
+        <b>TigerCrush</b>
       </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar16">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -33,10 +33,10 @@
       </div>
     </div>
   </div>
-  <div class="text-center py-2" style="">
+  <div class="text-center" style="">
     <div class="container">
       <div class="row">
-        <div class="col-6">
+        <div class="col-md-6 py-2">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
@@ -55,14 +55,14 @@
               </div>
               <form class="form-inline w-100">
                 <div class="input-group w-100">
-                  <input type="text" class="form-control text-center" placeholder="Search for people here...">
-                  <div class="input-group-append"><button class="btn btn-primary" type="button">Add crush!</button></div>
+                  <input type="text" class="form-control" placeholder="Search for people here...">
+                  <div class="input-group-append"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmModal">Add crush!</button></div>
                 </div>
               </form>
             </div>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-md-6 py-2">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Matches</b></h5>
@@ -96,7 +96,7 @@
       </div>
     </div>
   </div>
-  <div class="modal">
+  <div class="modal" id="confirmModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
