@@ -37,4 +37,4 @@ python3 db_create.py
 ```
 This will create the schema under your TigerCrush PostgreSQL database we made earlier.
 
-Enjoy your local testing!
+Now you are all set to enjoy the power of PostgreSQL locally. Enjoy!
