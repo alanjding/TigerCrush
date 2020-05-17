@@ -6,9 +6,9 @@
 # Defines back-end API for enabling dynamic manipulation of the website front end.
 # -------------------------------------------------------------------------------
 
-# from app import db
-# from db_models import User, Crush
-# import json
+from app import db
+from db_models import User, Crush
+import json
 
 # -------------------------------------------------------------------------------
 #                                 addUser()

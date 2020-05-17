@@ -12,20 +12,25 @@
 # -------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------
-# from app import db
-# from db_models import User
-# from db_functions import addUser
+from app import db
+from db_models import User, Crush
+from db_functions import addUser
 # -------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------
 #                                   STEP 1
-# initialize an HTTP connection to the TigerBook API server URL
+# Drop all previous crush data.
+# -------------------------------------------------------------------------------
+
+# -------------------------------------------------------------------------------
+#                                   STEP 2
+# Initialize an HTTP connection to the TigerBook API server URL
 # send GET /api/v1/undergraduates to get a JSON of student info
 # please see details at: https://github.com/alibresco/tigerbook-api
 # -------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------
-#                                   STEP 2
+#                                   STEP 3
 # Make User entries with the necessary fields to database by calling addUser()
 # -------------------------------------------------------------------------------
 

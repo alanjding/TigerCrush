@@ -1,10 +1,32 @@
+# -------------------------------------------------------------------------------
+# app.py
+# Authors: Alan Ding   (Princeton '22, CS BSE)
+#          Oleg Golev  (Princeton '22, CS BSE)
+#          Jerry Huang (Princeton '22, EE BSE)
+#
+# Running module and the routing middle-tier.
+# -------------------------------------------------------------------------------
+
 from flask import Flask, render_template, make_response
+from flask_sqlalchemy import SQLAlchemy
 from sys import argv, stderr
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
-
+# -----------------------------------------------------------------------
+#                         APP AND DATABASE SETUP
 # -----------------------------------------------------------------------
 
+from private import USER, PW, HOST, DB_NAME
+
+app = Flask(__name__, template_folder="templates", static_folder="static")
+DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+app.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
+
+# -----------------------------------------------------------------------
+#                            ROUTING SECTION
+# -----------------------------------------------------------------------
 
 @app.route('/')
 @app.route('/login')
@@ -14,14 +36,16 @@ def login():
 
 # -----------------------------------------------------------------------
 
-
 @app.route('/index')
 def index():
     html = render_template("index.html")
     return make_response(html)
 
 # -----------------------------------------------------------------------
-
+#                            MAIN METHOD
+# -----------------------------------------------------------------------
+# Requires a port number as a command-line argument. Starts the app.
+# -----------------------------------------------------------------------
 
 if __name__ == '__main__':
 

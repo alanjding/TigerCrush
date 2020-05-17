@@ -5,9 +5,8 @@
 # Defines database models in SQLAlchemy.
 # -------------------------------------------------------------------------------
 
-# from datetime import datetime
-# from app import db
-# from sqlalchemy.dialects.postgresql import JSON
+from app import db
+from sqlalchemy.dialects.postgresql import JSON
 
 # -------------------------------------------------------------------------------
 
@@ -19,7 +18,7 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     year = db.Column(db.String(10), nullable=False)
     visible = db.Column(db.Boolean, nullable=False, default=True)
-    contact_info = db.Column(db.JSON)
+    contact_info = db.Column(JSON)
 
     def __repr__(self):
         return f"User('{self.netid}', '{self.name}', '{self.year}', Visible: '{self.visible}')"
