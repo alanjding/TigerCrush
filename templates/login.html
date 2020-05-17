@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<!-- Author: Alan Ding -->
+
+<html lang="en">
 
 <head>
+  <title>TigerCrush - Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
@@ -26,8 +29,16 @@
       </div>
       <div class="container py-2">
         <div class="row">
-          <div class="col-md-12"><a href="{{url_for('index')}}" class="btn btn-lg btn-primary mx-1">Login with Princeton NetID</a>
+          <div class="col-3"></div>
+          <div class="col-6">
+             <form class="form-inline w-100" action="{{ url_for(index) }}">
+                <div class="input-group w-100">
+                  <input type="text" class="form-control" placeholder="netid">
+                  <div class="input-group-append"><input class="btn btn-primary mx-1" type="submit" value="Login with Princeton NetID"></div>
+                </div>
+              </form>
           </div>
+          <div class="col-3"></div>
         </div>
       </div>
       <div class="container py-2">
