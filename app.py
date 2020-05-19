@@ -25,6 +25,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
 
 # -----------------------------------------------------------------------
+#                           PER-REQUEST SETUP
+# -----------------------------------------------------------------------
+
+@app.before_request
+def redirectHTTP():
+    # redirect http to https
+    if request.url[0:5] != 'https':
+        return redirect(request.url.replace('http', 'https', 1))
+
+# -----------------------------------------------------------------------
 #                            ROUTING SECTION
 # -----------------------------------------------------------------------
 
