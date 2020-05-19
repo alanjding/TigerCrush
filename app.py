@@ -36,11 +36,11 @@ def login():
 
 # -----------------------------------------------------------------------
 
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/index')
 def index():
     netid = 'guest'
-    if request.method == 'POST':
-        netid = request.form.get('netid')
+    if 'netid' in request.args:
+        netid = request.args.get('netid')
 
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = len(getSecretAdmirers(netid))
