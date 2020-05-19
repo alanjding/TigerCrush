@@ -1,8 +1,8 @@
 # -------------------------------------------------------------------------------
 # db_functions.py
-# Authors: Oleg Golev  (Princeton '22, CS BSE)
+# Authors: Alan Ding   (Princeton '22, CS BSE)
+#          Oleg Golev  (Princeton '22, CS BSE)
 #          Jerry Huang (Princeton '22, EE BSE)
-#          Alan Ding   (Princeton '22, CS BSE)
 #
 # Defines back-end API for enabling dynamic manipulation of the website front end.
 # -------------------------------------------------------------------------------
