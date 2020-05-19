@@ -36,7 +36,7 @@ def login():
 
 # -----------------------------------------------------------------------
 
-@app.route('/index', methods='GET', 'POST')
+@app.route('/index', methods=['GET', 'POST'])
 def index():
     netid = 'guest'
     if request.method == 'POST':
