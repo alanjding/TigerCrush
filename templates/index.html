@@ -64,7 +64,10 @@
               <p class="card-text">You can still add <b class="text-primary">6</b> crushes.</p>
               <form class="form-inline w-100">
                 <div class="input-group w-100">
-                  <input type="text" class="form-control basicAutocomplete" data-url="/studentInfo" placeholder="Enter crushes here..." id="crushSelector">
+                  <select class="form-control" placeholder="Enter a crush's name here..." id="crushSelector">
+                    <option value="netid">netideeznuts</option>
+                    <option value="test">test option lol</option>
+                  </select>
                   <div class="input-group-append"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmModal">Add crush!</button></div>
                 </div>
               </form>
@@ -154,9 +157,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
   <script>
     $('#crushSelector').selectize({
-        options: ['a','ab','bc','cd'],
         maxItems: 1,
-        maxOptions: 10,
         persist: false
     });
   </script>
