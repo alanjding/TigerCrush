@@ -32,7 +32,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <div class="alert alert-primary" role="alert">
+          <div class="alert alert-primary" role="alert" id="noResultsAlert">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <p class="mb-0" style="">We were unable to find a student with the given netid. Perhaps try selecting one of the suggested students as you type in their name?</p>
           </div>
@@ -64,7 +64,7 @@
               <p class="card-text">You can still add <b class="text-primary">6</b> crushes.</p>
               <form class="form-inline w-100">
                 <div class="input-group w-100">
-                  <input type="text" class="form-control" placeholder="Enter netid or search for students by name here">
+                  <input type="text" class="form-control basicAutocomplete" data-url="/studentInfo" placeholder="Enter netid or search for students by name here..." autocomplete="off">
                   <div class="input-group-append"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmModal">Add crush!</button></div>
                 </div>
               </form>
@@ -150,6 +150,12 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!-- Bootstrap autocomplete plugin -->
+  <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.5/dist/latest/bootstrap-autocomplete.min.js"></script>
+  <script>
+    $('.basicAutocomplete').autoComplete();
+    $('#noResultsAlert').alert('close');
+  </script>
 </body>
 
 </html>

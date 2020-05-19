@@ -10,6 +10,8 @@
 from flask import Flask, render_template, make_response
 from flask_sqlalchemy import SQLAlchemy
 from sys import argv, stderr
+import json
+from db_functions import *
 
 # -----------------------------------------------------------------------
 #                         APP AND DATABASE SETUP
@@ -40,6 +42,13 @@ def login():
 def index():
     html = render_template("index.html")
     return make_response(html)
+
+# -----------------------------------------------------------------------
+
+# helper endpoint that returns formatted Tigerbook data
+@app.route('/studentInfo')
+def studentInfo():
+    return json.dumps(getFormattedStudentInfoList())
 
 # -----------------------------------------------------------------------
 #                            MAIN METHOD

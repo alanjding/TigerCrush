@@ -108,9 +108,8 @@ def getSecretAdmirers(crushing, crushed_on):
     pass
 
 # -------------------------------------------------------------------------------
-#                               UTILITY FUNCTIONS
+#                            OTHER UTILITY FUNCTIONS
 # -------------------------------------------------------------------------------
-# Getters and setters for custom contact information of the application users.
 #
 # For more information on how to query PostgreSQL JSON dictionaries and how to
 # convert them to Python dictionaries, please refer to...
@@ -119,5 +118,14 @@ def getSecretAdmirers(crushing, crushed_on):
 # For more information on how to access JSON fields in PostgreSQL tables, read
 # https://stackoverflow.com/questions/50043077/flask-sqlalchemy-mysql-json-column-update-not-working
 # -------------------------------------------------------------------------------
+
+# Returns a formatted list of all students' netids, names, and class years to be
+# used by the front-end's autocompletion interface
+def getFormattedStudentInfoList():
+    # for now to test the autocompleter return just an example list
+    return ["ajding - Alan Ding '22",
+            "gh14 - Gerald Huang '22",
+            "ogolev - Oleg Golev '22",
+            "rohitn - Rohit Narayanan '69"]
 
 # -------------------------------------------------------------------------------
