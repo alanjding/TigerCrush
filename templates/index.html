@@ -46,7 +46,7 @@
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
               <form class="form-inline" action="/addCrush" method="post">
                 <div class="input-group w-100">
-                  <select id="crushSelector" class="form-control selectpicker" data-live-search="true" name="crushNetid">
+                  <select id="crushSelector" class="form-control selectpicker" data-live-search="true" name="crushNetid" required>
                     <option disabled selected value="" style="display: none">Search for crushes here...</option>
                   </select>
                   <input type="hidden" name="netid" value="{{ netid }}">

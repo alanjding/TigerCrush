@@ -117,8 +117,7 @@ def addCrushEndpoint():
         print('addCrush crushNetid argument value: ' + crushNetid)
 
     # TODO - this is just placeholder code!
-    html = render_template("index.html")
-    return make_response(html)
+    return redirect(url_for('index'))
 
 # -----------------------------------------------------------------------
 #                            MAIN METHOD
