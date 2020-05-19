@@ -35,7 +35,7 @@ def redirectHTTP():
         return redirect(request.url.replace('http', 'https', 1))
 
 # -----------------------------------------------------------------------
-#                            ROUTING SECTION
+#                         PAGE ROUTING SECTION
 # -----------------------------------------------------------------------
 
 @app.route('/')
@@ -48,7 +48,9 @@ def login():
 
 @app.route('/index')
 def index():
-    # temporary, will need to be replaced by CAS functionality
+    # temporary, will need to be replaced by CAS functionality and storing state
+    # that says who's logged in as opposed to passing in a username as a request
+    # argument
     netid = 'guest'
     if 'netid' in request.args:
         netid = request.args.get('netid')
@@ -78,7 +80,7 @@ def about():
     return make_response(html)
 
 # -----------------------------------------------------------------------
-#                       ENDPOINTS FOR AJAX REQUESTS
+#                        ENDPOINTS FOR REQUESTS
 # -----------------------------------------------------------------------
 
 # helper endpoint that returns formatted Tigerbook data
@@ -101,6 +103,22 @@ def crushes():
 @app.route('/getMatches')
 def matches():
     return {'data': getMatches(request.args.get('netid'))}
+
+# -----------------------------------------------------------------------
+
+# adds a crush (crushNetid arg) for a given user (netid arg)
+@app.route('/addCrush', method=['GET', 'POST'])
+def addCrush():
+    if request.method == 'POST':
+        netid = request.form.get('netid')
+        crushNetid = request.form.get('crushNetid')
+
+        print('addCrush netid argument value: ' + netid)
+        print('addCrush crushNetid argument value: ' + crushNetid)
+
+    # TODO - this is just placeholder code!
+    html = render_template("index.html")
+    return make_response(html)
 
 # -----------------------------------------------------------------------
 #                            MAIN METHOD

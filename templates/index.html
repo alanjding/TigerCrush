@@ -24,19 +24,6 @@
 
 <body class="bg-light">
  {% include 'nav.html' %}
-  <!-- only show this alert when necessary -->
-  <!-- <div class="pt-2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="alert alert-primary" role="alert" id="noResultsAlert">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <p class="mb-0" style="">We were unable to find a student with the given netid. Perhaps try selecting one of the suggested students as you type in their name?</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <!--------------------------------------------------------------------------->
   <div class="text-center py-4">
     <div class="container">
@@ -57,11 +44,12 @@
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
-              <form class="form-inline" action="">
+              <form class="form-inline" action="/addCrush" method="post">
                 <div class="input-group w-100">
-                  <select id="crushSelector" class="form-control selectpicker" data-live-search="true">
+                  <select id="crushSelector" class="form-control selectpicker" data-live-search="true" name="crushNetid">
                     <option disabled selected value="" style="display: none">Search for crushes here...</option>
                   </select>
+                  <input type="hidden" name="netid" value="{{ netid }}">
                   <input type="submit" class="input-group-append btn btn-primary" value="Add crush!">
                 </div>
               </form>
