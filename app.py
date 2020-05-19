@@ -7,9 +7,8 @@
 # Running module and the routing middle-tier.
 # -------------------------------------------------------------------------------
 
-from flask import Flask, render_template, make_response
+from flask import *
 from sys import argv, stderr
-import json
 from db_functions import *
 
 # -----------------------------------------------------------------------
@@ -37,9 +36,19 @@ def login():
 
 # -----------------------------------------------------------------------
 
-@app.route('/index')
+@app.route('/index', methods='GET', 'POST')
 def index():
-    html = render_template("index.html")
+    netid = 'guest'
+    if request.method == 'POST':
+        netid = request.form.get('netid')
+
+    remCrushes = getRemCrushes(netid)
+    numSecretAdmirers = len(getSecretAdmirers(netid))
+
+    html = render_template("index.html",
+                           netid=netid,
+                           remCrushes=remCrushes,
+                           numSecretAdmirers=numSecretAdmirers)
     return make_response(html)
 
 # -----------------------------------------------------------------------
@@ -57,11 +66,29 @@ def about():
     return make_response(html)
 
 # -----------------------------------------------------------------------
+#                       ENDPOINTS FOR AJAX REQUESTS
+# -----------------------------------------------------------------------
 
 # helper endpoint that returns formatted Tigerbook data
 @app.route('/studentInfo')
 def studentInfo():
     return getFormattedStudentInfoList()
+
+# -----------------------------------------------------------------------
+
+# gets and formats (into a list of strings to be displayed) the crushes
+# for the user with the specified netid
+@app.route('/getCrushes')
+def getCrushes():
+    return getCrushes(request.args.get('netid'))
+
+# -----------------------------------------------------------------------
+
+# gets and formats (into a list of strings to be displayed) the matches
+# for the user with the specified netid
+@app.route('/getMatches')
+def getMatches():
+    return getMatches(request.args.get('netid'))
 
 # -----------------------------------------------------------------------
 #                            MAIN METHOD

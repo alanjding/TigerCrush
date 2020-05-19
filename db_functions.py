@@ -66,7 +66,11 @@ def attemptMatch(netid11, netid2):
 # -------------------------------------------------------------------------------
 
 def getCrushes(netid):
-    pass
+    # for testing front-end, you will eventually want to return a user
+    if netid == 'ajding':
+        return ['jerry', 'oleg', 'rohit']
+    else:
+        return []
 
 # -------------------------------------------------------------------------------
 #                                  getMatches()
@@ -81,32 +85,38 @@ def getCrushes(netid):
 # -------------------------------------------------------------------------------
 
 def getMatches(netid):
-    pass
+    # for testing front-end, you will eventually want to return a list of users
+    if netid == 'ajding':
+        return ['jerry', 'oleg', 'rohit']
+    else:
+        return []
 
 # -------------------------------------------------------------------------------
-#                              getMaxCrushes()
+#                              getRemCrushes()
 # -------------------------------------------------------------------------------
-# Retrieve the maximum number of crushes that a given person may have. For this
-# application, this is 5 + 1 for each secret admirer.
+# Retrieve the remaining number of crushes that a given person may have. For
+# this application, this is 5 + 1 more for each secret admirer minus the number
+# of crushes that the given person already has.
 #
 # Upon success, return the maximum number of crushes. Upon failure, print a
 # descriptive error and return a ser-readable error to display on the web page.
 # -------------------------------------------------------------------------------
 
-def getMaxCrushes(netid):
-    pass
+def getRemCrushes(netid):
+    return 5 + len(getSecretAdmirers(netid)) - len(getCrushes(netid))
 
 # -------------------------------------------------------------------------------
 #                              getSecretAdmirers()
 # -------------------------------------------------------------------------------
-# Retrieve the number of secret admirers that a given person has.
+# Retrieve the secret admirers that a given person has.
 #
-# Upon success, return the number of admirers. Upon failure, print a descriptive
+# Upon success, return a list of admirers. Upon failure, print a descriptive
 # error and return a ser-readable error to display on the web page.
 # -------------------------------------------------------------------------------
 
-def getSecretAdmirers(crushing, crushed_on):
-    pass
+def getSecretAdmirers(netid):
+    # for testing front-end, you will eventually want to return a list of users
+    return ['ryan', 'will']
 
 # -------------------------------------------------------------------------------
 #                            OTHER UTILITY FUNCTIONS
@@ -120,15 +130,15 @@ def getSecretAdmirers(crushing, crushed_on):
 # https://stackoverflow.com/questions/50043077/flask-sqlalchemy-mysql-json-column-update-not-working
 # -------------------------------------------------------------------------------
 
-# Returns a list of all students' netids, names, and class years to be
+# Returns a dictionary of all students' netids, names, and class years to be
 # used by the front-end's autocompletion interface
 def getFormattedStudentInfoList():
     # for now to test the autocompleter return just an example list
     return {
-        'ajding': {'name': 'Alan Ding', 'class': 2022},
-        'ogolev': {'name': 'Oleg Golev', 'class': 2022},
-        'gmhuang': {'name': 'Jerry Huang', 'class': 2022},
-        'rohitn': {'name': 'slenderboi', 'class': 1969}
+        'ajding': {'name': 'Alan Ding', 'class': '2022'},
+        'ogolev': {'name': 'Oleg Golev', 'class': '2022'},
+        'gmhuang': {'name': 'Jerry Huang', 'class': '2022'},
+        'rohitn': {'name': 'slenderboi', 'class': '1969'}
     }
 
 # -------------------------------------------------------------------------------

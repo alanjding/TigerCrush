@@ -30,7 +30,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12" style="">
-          <h1 class="text-primary"><b>Hello, [name]!</b></h1>
+          <h1 class="text-primary"><b>Hello, {{ netid }}!</b></h1>
         </div>
       </div>
     </div>
@@ -44,9 +44,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
-              <!-- only show this next line if crush list is empty -->
-              <p class="card-text">You have not added any crushes yet. Get started below!</p>
-              <p class="card-text">You can still add <b class="text-primary">6</b> crushes.</p>
+              <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
               <form class="form-inline" action="">
                 <div class="input-group w-100">
                   <select id="crushSelector" class="form-control selectpicker" data-live-search="true">
@@ -55,18 +53,7 @@
                   <input type="submit" class="input-group-append btn btn-primary" value="Add crush!">
                 </div>
               </form>
-              <div class="table-responsive pt-3">
-                <table class="table table-striped table-borderless border">
-                  <tbody>
-                    <tr class="text-center">
-                      <td class="">[name]</td>
-                    </tr>
-                    <tr class="text-center">
-                      <td class="">[name]</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <div id="crushList"><!-- dynamically populated --></div>
             </div>
           </div>
         </div>
@@ -75,22 +62,9 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Matches</b></h5>
-              <!-- only show this if matches list is empty -->
-              <p class="card-text">You have not been matched to one of your crushes yet :(</p>
-              <div class="table-responsive">
-                <table class="table table-striped table-borderless border">
-                  <tbody>
-                    <tr class="text-center">
-                      <td>[name]</td>
-                    </tr>
-                    <tr class="text-center">
-                      <td>[name]</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <h5 class="card-title text-primary"><b>Your Secret Admirers</b></h5>
-                <p class="card-text"><b class="text-primary">3</b> people that you don't have a crush on have a crush on you!</p>
-              </div>
+              <div id="matchList"><!-- dynamically populated --></div>
+              <h5 class="card-title text-primary"><b>Your Secret Admirers</b></h5>
+              <p class="card-text"><b class="text-primary">{{ numSecretAdmirers }}</b> people that you don't have a crush on have a crush on you!</p>
             </div>
           </div>
         </div>
@@ -126,15 +100,70 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!-- Bootstrap autocomplete plugin -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-  <!-- dynamically populates crush search dropdown -->
   <script>
+    // dynamically populate crush search dropdown
     $.ajax({
         method: 'GET',
         url: '/studentInfo',
         success: function(result) {
             for (let netid of Object.keys(result)) {
-                console.log(result);
                 $('#crushSelector').append(new Option(result[netid].name + ', ' + result[netid].class, netid));
+            }
+        }
+    });
+
+    // dynamically populate crush list
+    $.ajax({
+        method: 'GET',
+        url: '/getCrushes?netid=' + {{ netid }},
+        success: function(result) {
+            if (result.length === 0) {
+                $('#crushList').append('<p class="card-text">You have not added any crushes yet. Get started below!</p>');
+            } else {
+                $('#crushList').append('<div class="table-responsive pt-3">\n' +
+                    '<table class="table table-striped table-borderless border">\n' +
+                    '<tbody>\n'
+                );
+
+                for (let name of result) {
+                    $('#crushList').append('<tr class="text-center">\n' +
+                        '<td class="">' + name + '</td>\n' +
+                        '</tr>\n'
+                    );
+                }
+
+                $('#crushList').append('</tbody>\n' +
+                    '</table>\n' +
+                    '</div>'
+                );
+            }
+        }
+    });
+
+    // dynamically populate match list
+    $.ajax({
+        method: 'GET',
+        url: '/getMatches?netid=' + {{ netid }},
+        success: function(result) {
+            if (result.length === 0) {
+                $('#matchList').append('<p class="card-text">You have not been matched to one of your crushes yet :(</p>');
+            } else {
+                $('#matchList').append('<div class="table-responsive">\n' +
+                    '<table class="table table-striped table-borderless border">\n' +
+                    '<tbody>\n'
+                );
+
+                for (let name of result) {
+                    $('#matchList').append('<tr class="text-center">\n' +
+                        '<td class="">' + name + '</td>\n' +
+                        '</tr>\n'
+                    );
+                }
+
+                $('#matchList').append('</tbody>\n' +
+                    '</table>\n' +
+                    '</div>'
+                );
             }
         }
     });
