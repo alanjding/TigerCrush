@@ -45,14 +45,14 @@ def index():
 # -----------------------------------------------------------------------
 
 @app.route('/faq')
-def index():
+def faq():
     html = render_template("faq.html")
     return make_response(html)
 
 # -----------------------------------------------------------------------
 
 @app.route('/about')
-def index():
+def about():
     html = render_template("about.html")
     return make_response(html)
 
