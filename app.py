@@ -107,7 +107,7 @@ def matches():
 # -----------------------------------------------------------------------
 
 # adds a crush (crushNetid arg) for a given user (netid arg)
-@app.route('/addCrush', method=['GET', 'POST'])
+@app.route('/addCrush', methods=['GET', 'POST'])
 def addCrushEndpoint():
     if request.method == 'POST':
         netid = request.form.get('netid')
