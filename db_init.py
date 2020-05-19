@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------------
 # db_init.py
-# Authors: Oleg Golev  (Princeton '22, CS BSE)
-#          Jerry Huang (Princeton '22, EE BSE)
+# Authors: Alan Ding   (Princeton '22, CS BSE)
+#          Oleg Golev  (Princeton '22, CS BSE)
 #
 # Main script that initializes the database. Uses the TigerBook API to fill in
 # all entries within the User table. If a user specified custom contact
@@ -21,6 +21,9 @@ from db_functions import addUser
 #                                   STEP 1
 # Drop all previous crush data.
 # -------------------------------------------------------------------------------
+db.drop_all()
+db.create_all()
+db.session.commit()
 
 # -------------------------------------------------------------------------------
 #                                   STEP 2

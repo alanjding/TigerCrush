@@ -7,7 +7,7 @@
 # Defines back-end API for enabling dynamic manipulation of the website front end.
 # -------------------------------------------------------------------------------
 
-from db_models import db
+from app import db
 from db_models import User, Crush
 import json
 
