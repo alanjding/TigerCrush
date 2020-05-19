@@ -74,7 +74,7 @@ def about():
 # helper endpoint that returns formatted Tigerbook data
 @app.route('/studentInfo')
 def studentInfo():
-    return {'data': getFormattedStudentInfoList()}
+    return getFormattedStudentInfoList()
 
 # -----------------------------------------------------------------------
 
@@ -90,7 +90,7 @@ def crushes():
 # for the user with the specified netid
 @app.route('/getMatches')
 def matches():
-    return getMatches(request.args.get('netid'))
+    return {'data': getMatches(request.args.get('netid'))}
 
 # -----------------------------------------------------------------------
 #                            MAIN METHOD
