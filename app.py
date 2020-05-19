@@ -44,6 +44,20 @@ def index():
 
 # -----------------------------------------------------------------------
 
+@app.route('/faq')
+def index():
+    html = render_template("faq.html")
+    return make_response(html)
+
+# -----------------------------------------------------------------------
+
+@app.route('/about')
+def index():
+    html = render_template("about.html")
+    return make_response(html)
+
+# -----------------------------------------------------------------------
+
 # helper endpoint that returns formatted Tigerbook data
 @app.route('/studentInfo')
 def studentInfo():
