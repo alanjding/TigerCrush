@@ -21,6 +21,7 @@ from db_functions import addUser
 #                                   STEP 1
 # Drop all previous crush data.
 # -------------------------------------------------------------------------------
+
 db.drop_all()
 db.create_all()
 db.session.commit()

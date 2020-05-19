@@ -8,7 +8,6 @@
 # -------------------------------------------------------------------------------
 
 from flask import *
-from flask_sqlalchemy import SQLAlchemy
 import os
 from sys import argv, stderr
 from db_functions import *
@@ -26,7 +25,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
 
-db = SQLAlchemy(app)
+db.init_app(app)
 
 # -----------------------------------------------------------------------
 #                           PER-REQUEST SETUP
