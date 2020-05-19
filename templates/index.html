@@ -158,7 +158,7 @@
         method: 'GET',
         url: '/studentInfo',
         success: function(result) {
-            for (let [netid, info] of Object.entries(students)) {
+            for (let [netid, info] of Object.entries(result)) {
                 $('#crushSelector').append(new Option(netid, info.name + ', ' + info.class.toString()));
             }
         }
