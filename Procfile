@@ -1,0 +1,1 @@
+web: gunicorn --worker-cl -w 1 app:appass eventlet
