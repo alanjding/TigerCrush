@@ -8,7 +8,6 @@
 # -------------------------------------------------------------------------------
 
 from flask import Flask, render_template, make_response
-from flask_sqlalchemy import SQLAlchemy
 from sys import argv, stderr
 import json
 from db_functions import *
@@ -23,7 +22,7 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
 app.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
 
 # -----------------------------------------------------------------------
