@@ -159,6 +159,7 @@
         url: '/studentInfo',
         success: function(result) {
             for (let [netid, info] of Object.entries(result)) {
+                console.log(result);
                 $('#crushSelector').append(new Option(netid, info.name + ', ' + info.class));
             }
         }

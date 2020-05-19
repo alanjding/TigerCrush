@@ -47,7 +47,7 @@ def index():
 # helper endpoint that returns formatted Tigerbook data
 @app.route('/studentInfo')
 def studentInfo():
-    return json.dumps(getFormattedStudentInfoList())
+    return getFormattedStudentInfoList()
 
 # -----------------------------------------------------------------------
 #                            MAIN METHOD
