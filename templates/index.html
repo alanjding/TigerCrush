@@ -64,7 +64,7 @@
               <p class="card-text">You can still add <b class="text-primary">6</b> crushes.</p>
               <form class="form-inline w-100">
                 <div class="input-group w-100">
-                  <input type="text" class="form-control basicAutocomplete" data-url="/studentInfo" placeholder="Enter netid or search for students by name here..." id="crushSelector">
+                  <input type="text" class="form-control basicAutocomplete" data-url="/studentInfo" placeholder="Enter crushes here..." id="crushSelector">
                   <div class="input-group-append"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#confirmModal">Add crush!</button></div>
                 </div>
               </form>
@@ -147,18 +147,17 @@
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!-- Bootstrap autocomplete plugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
   <script>
     $('#crushSelector').selectize({
-        options: $.ajax({
-            type: 'GET',
-            url: '/studentInfo'
-        }),
-        maxItems: 1
+        options: ['a','ab','bc','cd'],
+        maxItems: 1,
+        maxOptions: 10,
+        persist: false
     });
   </script>
 </body>
