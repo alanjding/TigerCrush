@@ -120,13 +120,15 @@ def getSecretAdmirers(crushing, crushed_on):
 # https://stackoverflow.com/questions/50043077/flask-sqlalchemy-mysql-json-column-update-not-working
 # -------------------------------------------------------------------------------
 
-# Returns a formatted list of all students' netids, names, and class years to be
+# Returns a list of all students' netids, names, and class years to be
 # used by the front-end's autocompletion interface
 def getFormattedStudentInfoList():
     # for now to test the autocompleter return just an example list
-    return ["ajding - Alan Ding '22",
-            "gh14 - Gerald Huang '22",
-            "ogolev - Oleg Golev '22",
-            "rohitn - Rohit Narayanan '69"]
+    return {
+        'ajding': {'name': 'Alan Ding', 'class': 2022},
+        'ogolev': {'name': 'Oleg Golev', 'class': 2022},
+        'gmhuang': {'name': 'Jerry Huang', 'class': 2022},
+        'rohitn': {'name': 'slenderboi', 'class': 1969}
+    }
 
 # -------------------------------------------------------------------------------
