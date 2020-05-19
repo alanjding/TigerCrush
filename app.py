@@ -38,9 +38,11 @@ def login():
 
 @app.route('/index')
 def index():
+    # temporary, will need to be replaced by CAS functionality
     netid = 'guest'
     if 'netid' in request.args:
         netid = request.args.get('netid')
+    # end temporary stuff
 
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = len(getSecretAdmirers(netid))
@@ -79,7 +81,7 @@ def studentInfo():
 # gets and formats (into a list of strings to be displayed) the crushes
 # for the user with the specified netid
 @app.route('/getCrushes')
-def getCrushes():
+def crushes():
     return getCrushes(request.args.get('netid'))
 
 # -----------------------------------------------------------------------
@@ -87,7 +89,7 @@ def getCrushes():
 # gets and formats (into a list of strings to be displayed) the matches
 # for the user with the specified netid
 @app.route('/getMatches')
-def getMatches():
+def matches():
     return getMatches(request.args.get('netid'))
 
 # -----------------------------------------------------------------------
