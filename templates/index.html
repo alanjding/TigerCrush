@@ -158,9 +158,9 @@
         method: 'GET',
         url: '/studentInfo',
         success: function(result) {
-            for (let [info, netid] of Object.entries(result)) {
+            for (let netid of Object.keys(result)) {
                 console.log(result);
-                $('#crushSelector').append(new Option(netid, info.name + ', ' + info.class));
+                $('#crushSelector').append(new Option(netid, result[netid].name + ', ' + result[netid].class));
             }
         }
     });
