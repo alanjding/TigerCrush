@@ -158,7 +158,7 @@
     function htmlizeStudents(students) {
         let html = '<option disabled selected value="" style="display: none">Search for crushes here...</option>';
         for (let [netid, info] of Object.entries(students)) {
-            html += String.format('<option value="{0}">{1} ({2})</option>', netid, info.name, info.class);
+            html += '<option value="' + netid + '">' + info.name + ' (' + info.class + ')</option>';
         }
 
         return html;
