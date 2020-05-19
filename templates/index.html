@@ -160,7 +160,7 @@
         success: function(result) {
             for (let netid of Object.keys(result)) {
                 console.log(result);
-                $('#crushSelector').append(new Option(netid, result[netid].name + ', ' + result[netid].class));
+                $('#crushSelector').append(new Option(result[netid].name + ', ' + result[netid].class, netid));
             }
         }
     });
