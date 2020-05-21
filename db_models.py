@@ -32,7 +32,7 @@ class Crush(db.Model):
 
     __tablename__ = 'crush'
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     crushing = db.Column(db.String, nullable=False)
     crushed_on = db.Column(db.String, nullable=False)
 

@@ -2,14 +2,12 @@
 # db_functions.py
 # Authors: Alan Ding   (Princeton '22, CS BSE)
 #          Oleg Golev  (Princeton '22, CS BSE)
-#          Jerry Huang (Princeton '22, EE BSE)
 #
 # Defines back-end API for enabling dynamic manipulation of the website front end.
 # -------------------------------------------------------------------------------
 
 from db_models import db
 from db_models import User, Crush
-import json
 
 # -------------------------------------------------------------------------------
 #                                 addUser()
@@ -35,12 +33,14 @@ def addUser(netid, name, year):
 # Take two netid's represented as strings to add a new entry to the crush table.
 # Call attemptMatch() executing in a new thread before returning.
 #
-# Upon success, return 0. Upon failure, print a descriptive error and return a
-# user-readable error to display on the web page.
+# Returns whether the added crush resulted in a match.
 # -------------------------------------------------------------------------------
 
 def addCrush(crushing, crushed_on):
-    pass
+    crush = Crush(crushing=crushing, crushed_on=crushed_on)
+    db.session.add(crush)
+    db.session.commit()
+    return isMatch(crushing, crushed_on)
 
 # -------------------------------------------------------------------------------
 #                                   isMatch()
@@ -52,7 +52,7 @@ def addCrush(crushing, crushed_on):
 # -------------------------------------------------------------------------------
 
 def isMatch(netid1, netid2):
-    pass
+    return netid2 in getCrushNames(netid1) and netid1 in getCrushNames(netid2)
 
 # -------------------------------------------------------------------------------
 #                                  getCrushes()
@@ -67,11 +67,20 @@ def isMatch(netid1, netid2):
 # -------------------------------------------------------------------------------
 
 def getCrushes(netid):
-    # for testing front-end, you will eventually want to return a user
-    if netid == 'ajding':
-        return ['jerry', 'oleg', 'rohit']
-    else:
-        return []
+    return db.session.query(Crush).filter_by(crushing=netid).all()
+
+# -------------------------------------------------------------------------------
+#                                  getCrushNames()
+# -------------------------------------------------------------------------------
+# Retrieve (by netid) a user's crushes as a list of netids (strings)
+#
+# Upon failure, print a descriptive error and return a ser-readable error to
+# display on the web page.
+# -------------------------------------------------------------------------------
+
+def getCrushNames(netid):
+    crushes = getCrushes(netid)
+    return [crush.crushed_on for crush in crushes]
 
 # -------------------------------------------------------------------------------
 #                                  getMatches()
@@ -86,11 +95,12 @@ def getCrushes(netid):
 # -------------------------------------------------------------------------------
 
 def getMatches(netid):
-    # for testing front-end, you will eventually want to return a list of users
-    if netid == 'ajding':
-        return ['jerry', 'oleg', 'rohit']
-    else:
-        return []
+    crushes = getCrushNames(netid)
+
+    return db.session.query(Crush) \
+        .filter_by(crushing_on=netid) \
+        .filter(Crush.crushing in crushes) \
+        .all()
 
 # -------------------------------------------------------------------------------
 #                              getRemCrushes()
@@ -116,30 +126,24 @@ def getRemCrushes(netid):
 # -------------------------------------------------------------------------------
 
 def getSecretAdmirers(netid):
-    # for testing front-end, you will eventually want to return a list of users
-    return ['ryan', 'will']
+    crushes = getCrushNames(netid)
+
+    secretAdmirers = db.session.query(Crush) \
+        .filter_by(crushing_on=netid) \
+        .filter(Crush.crushing not in crushes) \
+        .all()
+
+    return [s.crushing for s in secretAdmirers]
 
 # -------------------------------------------------------------------------------
-#                            OTHER UTILITY FUNCTIONS
+#                         getFormattedStudentInfoList()
 # -------------------------------------------------------------------------------
-#
-# For more information on how to query PostgreSQL JSON dictionaries and how to
-# convert them to Python dictionaries, please refer to...
-# https://stackoverflow.com/questions/23878070/using-json-type-with-flask-sqlalchemy-postgresql
-#
-# For more information on how to access JSON fields in PostgreSQL tables, read
-# https://stackoverflow.com/questions/50043077/flask-sqlalchemy-mysql-json-column-update-not-working
-# -------------------------------------------------------------------------------
-
 # Returns a dictionary of all students' netids, names, and class years to be
 # used by the front-end's autocompletion interface
+# -------------------------------------------------------------------------------
+
 def getFormattedStudentInfoList():
-    # for now to test the autocompleter return just an example list
-    return {
-        'ajding': {'name': 'Alan Ding', 'class': '2022'},
-        'ogolev': {'name': 'Oleg Golev', 'class': '2022'},
-        'gmhuang': {'name': 'Jerry Huang', 'class': '2022'},
-        'rohitn': {'name': 'slenderboi', 'class': '1969'}
-    }
+    users = db.session.query(User).all()
+    return {user.netid: {'name': user.name, 'class': user.year} for user in users}
 
 # -------------------------------------------------------------------------------

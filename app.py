@@ -2,7 +2,6 @@
 # app.py
 # Authors: Alan Ding   (Princeton '22, CS BSE)
 #          Oleg Golev  (Princeton '22, CS BSE)
-#          Jerry Huang (Princeton '22, EE BSE)
 #
 # Running module and the routing middle-tier.
 # -------------------------------------------------------------------------------
@@ -125,7 +124,12 @@ def addCrushEndpoint():
         print('addCrush netid argument value: ' + netid)
         print('addCrush crushNetid argument value: ' + crushNetid)
 
-    # TODO - this is just placeholder code!
+        matched = addCrush(netid, crushNetid)
+
+        # TODO - send email if matched
+
+    # TODO - this is just placeholder code! Will need to be changed according to
+    # how CAS sets authorization cookies
     return redirect(url_for('index'))
 
 # -----------------------------------------------------------------------
