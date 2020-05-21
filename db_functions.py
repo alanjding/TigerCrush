@@ -25,7 +25,9 @@ import json
 # -------------------------------------------------------------------------------
 
 def addUser(netid, name, year):
-    pass
+    user = User(netid=netid, name=name, year=year, visible=True)
+    db.session.add(user)
+    db.session.commit()
 
 # -------------------------------------------------------------------------------
 #                                 addCrush()

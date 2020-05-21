@@ -1,3 +1,5 @@
+requests
+click
 Flask==1.1.1
 flask-heroku==0.1.9
 Flask-socketio==4.2.1
@@ -8,3 +10,4 @@ psycopg2-binary==2.8.3
 SQLAlchemy==1.3.10
 SQLAlchemy-Utils==0.35.0
 gunicorn==20.0.4
+suds-community==0.8.4
