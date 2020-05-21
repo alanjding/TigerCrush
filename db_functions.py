@@ -98,7 +98,7 @@ def getMatches(netid):
     crushes = getCrushNames(netid)
 
     return db.session.query(Crush) \
-        .filter_by(crushing_on=netid) \
+        .filter_by(crushed_on=netid) \
         .filter(Crush.crushing in crushes) \
         .all()
 
@@ -129,7 +129,7 @@ def getSecretAdmirers(netid):
     crushes = getCrushNames(netid)
 
     secretAdmirers = db.session.query(Crush) \
-        .filter_by(crushing_on=netid) \
+        .filter_by(crushed_on=netid) \
         .filter(Crush.crushing not in crushes) \
         .all()
 
