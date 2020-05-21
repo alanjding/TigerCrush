@@ -15,7 +15,7 @@ import json
 #                                 addUser()
 # -------------------------------------------------------------------------------
 # Add a user to the database. There are two uses.
-# (1) Helper function for initializing the database in db_init.py
+# (1) Helper function for initializing the database
 # (2) If the user is not an undergraduate or is not on TigerBook, let the user
 #     add themselves to the system manually. year field will be "GRAD" if it is
 #     a graduate student, "STAFF" if it is a professor or a post-doc researcher.

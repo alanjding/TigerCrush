@@ -136,7 +136,7 @@ def addCrushEndpoint():
 # crushes between any two students
 @app.cli.command(name='resetDB')
 def resetDB():
-    print('Deleting existing data... ', end='')
+    print('Deleting existing data... ', end='', flush=True)
 
     # drop all previous crush data
     db.drop_all()
@@ -144,13 +144,13 @@ def resetDB():
     db.session.commit()
 
     print('Done!')
-    print('Fetching students from TigerBook... ', end='')
+    print('Fetching students from TigerBook... ', end='', flush=True)
 
     # grab TigerBook data
     students = getStudents()
 
     print('Done!')
-    print('Populating database with student data... ', end='')
+    print('Populating database with student data... ', end='', flush=True)
 
     # create rows in the db for each student
     for student in students:
@@ -171,8 +171,7 @@ def getStudents():
         '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/') for
         i in range(32)])
     username = 'ajding'
-    password = 'cedda4cc61fe1c736aada24eda32f5ab'
-    # password = os.environ.get('TIGERBOOK_KEY')
+    password = os.environ.get('TIGERBOOK_KEY')
     generated_digest = b64encode(hashlib.sha256(
         nonce.encode('utf-8') + created.encode('utf-8') + password.encode(
             'utf-8')).digest()).decode()
