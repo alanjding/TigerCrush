@@ -15,6 +15,7 @@
     $.get(
         '/studentInfo', {},
         function(result) {
+            console.log(result['ajding']);
             for (let netid of Object.keys(result)) {
                 $('#crushSelector').append(new Option(result[netid].name + ', ' + result[netid].class, netid));
             }
