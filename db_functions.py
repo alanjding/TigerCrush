@@ -43,16 +43,15 @@ def addCrush(crushing, crushed_on):
     pass
 
 # -------------------------------------------------------------------------------
-#                               attemptMatch()
+#                                   isMatch()
 # -------------------------------------------------------------------------------
 # Checks whether there are two inverse entries in the crush table. If so, a match
 # has been found. Send a one-time email with contact information to the two users.
 #
-# Upon success, return 0. Upon failure, print a descriptive error and return a
-# user-readable error to display on the web page.
+# Returns whether netid1 and netid2 mutually crush on each other.
 # -------------------------------------------------------------------------------
 
-def attemptMatch(netid11, netid2):
+def isMatch(netid1, netid2):
     pass
 
 # -------------------------------------------------------------------------------
