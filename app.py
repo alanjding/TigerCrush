@@ -94,7 +94,7 @@ def about():
 # helper endpoint that returns formatted Tigerbook data
 @app.route('/studentInfo')
 def studentInfo():
-    return jsonify(getFormattedStudentInfoList())
+    return {'data': getFormattedStudentInfoList()}
 
 # -----------------------------------------------------------------------
 

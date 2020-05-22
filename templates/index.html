@@ -92,9 +92,7 @@
         method: 'GET',
         url: '/getCrushes?netid=' + '{{ netid }}',
         success: function(result) {
-            console.log(result);
             let students = result.data;
-            console.log(students);
             if (students.length === 0) {
                 $('#crushList').append('<p class="card-text pt-3">You have not added any crushes yet. Get started above!</p>');
             } else {
@@ -175,7 +173,7 @@
         '/studentInfo', {},
         function(result) {
             let students = result.data;
-
+            console.log(students);
             $('#crushSelector').typeahead({
                 hint: true,
                 highlight: true,
