@@ -176,11 +176,11 @@
                 let students = result.data;
 
                 $('#crushSelector').typeahead({source: students})
-                    .blur(function () { // ensure user picks one of the suggestions
+                   /* .blur(function () { // ensure user picks one of the suggestions
                         if (students.indexOf($(this).val()) === -1) {
                             $('#crushSelector').val('');
                         }
-                    });
+                    });*/
             }
         );
     });
