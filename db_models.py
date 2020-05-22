@@ -12,7 +12,6 @@ from sqlalchemy.dialects.postgresql import JSON
 
 db = SQLAlchemy()
 
-
 class User(db.Model):
 
     __tablename__ = 'user'

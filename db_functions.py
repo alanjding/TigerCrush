@@ -67,7 +67,7 @@ def isMatch(netid1, netid2):
 # -------------------------------------------------------------------------------
 
 def getCrushes(netid):
-    return db.session.query(Crush).filter_by(crushing=netid).all()
+    return Crush.query.filter_by(crushing=netid).all()
 
 # -------------------------------------------------------------------------------
 #                                  getCrushNames()
@@ -95,6 +95,7 @@ def getCrushNames(netid):
 # -------------------------------------------------------------------------------
 
 def getMatches(netid):
+
     crushes = getCrushNames(netid)
 
     return db.session.query(Crush) \
@@ -122,18 +123,19 @@ def getRemCrushes(netid):
 # Retrieve the secret admirers that a given person has.
 #
 # Upon success, return a list of admirers. Upon failure, print a descriptive
-# error and return a ser-readable error to display on the web page.
+# error and return a user-readable error to display on the web page.
 # -------------------------------------------------------------------------------
 
 def getSecretAdmirers(netid):
+
     crushes = getCrushNames(netid)
 
-    secretAdmirers = db.session.query(Crush) \
+    secret_admirers = db.session.query(Crush) \
         .filter_by(crushed_on=netid) \
         .filter(Crush.crushing not in crushes) \
         .all()
 
-    return [s.crushing for s in secretAdmirers]
+    return [s.crushing for s in secret_admirers]
 
 # -------------------------------------------------------------------------------
 #                         getFormattedStudentInfoList()
@@ -143,7 +145,7 @@ def getSecretAdmirers(netid):
 # -------------------------------------------------------------------------------
 
 def getFormattedStudentInfoList():
-    users = db.session.query(User).all()
+    users = User.query.all()
     r = ['%s - %s, %s' % (user.netid, user.name, user.year) for user in users]
     return r
 
