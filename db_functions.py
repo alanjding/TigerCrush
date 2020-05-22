@@ -67,7 +67,10 @@ def isMatch(netid1, netid2):
 # -------------------------------------------------------------------------------
 
 def getCrushes(netid):
-    return Crush.query.filter_by(crushing=netid).all()
+    crushes = Crush.query.filter_by(crushing=netid).all()
+    print('crushes:')
+    print(crushes)
+    return crushes
 
 # -------------------------------------------------------------------------------
 #                                  getCrushNames()
@@ -117,6 +120,7 @@ def getMatches(netid):
         .all()
 
     # for debugging purposes only! delete later
+    print('matches:')
     print(matches)
     return matches
 
@@ -154,6 +158,7 @@ def getSecretAdmirers(netid):
         .all()
 
     # for debugging purposes only! delete later
+    print('secret admirers:')
     print([s.crushing for s in secret_admirers])
     return len(secret_admirers)
 

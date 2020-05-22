@@ -1,7 +1,7 @@
 // dynamically populate crush list
 $.ajax({
     method: 'GET',
-    url: '/getCrushes?netid=' + '{{ netid }}',
+    url: '/getCrushes?netid=' + $('#netidStore').attr('value'), // + netid
     success: function(result) {
         let students = result.data;
         if (students.length === 0) {
@@ -30,7 +30,7 @@ $.ajax({
 // dynamically populate match list
 $.ajax({
     method: 'GET',
-    url: '/getMatches?netid=' + '{{ netid }}',
+    url: '/getMatches?netid=' + $('#netidStore').attr('value'), // + netid
     success: function(result) {
         let students = result.data;
         if (students.length === 0) {
