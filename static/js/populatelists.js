@@ -36,6 +36,7 @@ $.ajax({
         if (students.length === 0) {
             $('#matchList').append('<p class="card-text pb-3">You have not been matched to one of your crushes yet :(</p>');
         } else {
+            $('#matchList').append('<p class="card-text pb-3 text-primary"><b>Congratulations! You\'ve been matched!</b></p>');
             $('#matchList').append('<div class="table-responsive">\n' +
                 '<table class="table table-striped table-borderless border">\n' +
                 '<tbody>\n'
