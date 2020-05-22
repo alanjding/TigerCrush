@@ -9,6 +9,7 @@
 
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 from sys import argv, stderr
 import os
 import hashlib
@@ -25,16 +26,27 @@ import json
 from private import USER, PW, HOST, DB_NAME
 
 appl = Flask(__name__, template_folder="templates", static_folder="static")
-appl.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
+appl.secret_key = os.environ.get('SECRET_KEY')
+
+mail_settings = {
+    "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
+    "MAIL_PORT": os.environ.get('MAIL_PORT'),
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
+    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),
+    "MAIL_DEFAULT_SENDER": os.environ.get('MAIL_DEFAULT_SENDER')
+}
+appl.config.update(mail_settings)
+mail = Mail(appl)
 
 # -------------- !!! COMMENT OUT IF RUNNING ON HEROKU !!! -------------- #
 # DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
-# app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+# appl.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 # ---------------------------------------------------------------------- #
 
 # --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
-appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 # ---------------------------------------------------------------------- #
 
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -43,6 +55,7 @@ db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True, 'pool_size': 20, 'm
 
 from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers,\
     getFormattedStudentInfoList, getCrushes, getMatches, getName
+from send_emails import send_match_email
 
 # -----------------------------------------------------------------------
 #                           PER-REQUEST SETUP
@@ -156,10 +169,9 @@ def addCrushEndpoint():
         print('addCrush netid argument value: ' + netid)
         print('addCrush crushNetid argument value: ' + crushNetid)
 
-        matched, err = addCrush(netid, crushNetid)
-        print(matched)
-
-        # TODO - send email if matched
+        matched = addCrush(netid, crushNetid)
+        if matched:
+            send_match_email(netid, crushNetid)
 
     # TODO - this is just placeholder code! Will need to be changed according to
     # how CAS sets authorization cookies
