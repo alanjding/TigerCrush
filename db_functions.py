@@ -145,7 +145,6 @@ def getSecretAdmirers(netid):
 def getFormattedStudentInfoList():
     users = db.session.query(User).all()
     r = ['%s - %s, %s' % (user.netid, user.name, user.year) for user in users]
-    print(r[0:10])
     return r
 
 # -------------------------------------------------------------------------------
