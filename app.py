@@ -94,18 +94,21 @@ def index():
 
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = getSecretAdmirers(netid)
+    matched = len(getMatches(netid)) > 0
 
     if err is not None:
         html = render_template("index.html",
                                netid=netid,
                                remCrushes=remCrushes,
                                numSecretAdmirers=numSecretAdmirers,
+                               matched=matched,
                                err=err)
     else:
         html = render_template("index.html",
                                netid=netid,
                                remCrushes=remCrushes,
-                               numSecretAdmirers=numSecretAdmirers)
+                               numSecretAdmirers=numSecretAdmirers,
+                               matched=matched)
 
     return make_response(html)
 
