@@ -107,6 +107,7 @@ def getName(netid):
 # display on the web page.
 # -------------------------------------------------------------------------------
 
+# TODO: fix
 def getMatches(netid):
     crushes = getCrushNames(netid)
 
@@ -142,6 +143,7 @@ def getRemCrushes(netid):
 # error and return a user-readable error to display on the web page.
 # -------------------------------------------------------------------------------
 
+# TODO: fix
 def getSecretAdmirers(netid):
 
     crushes = getCrushNames(netid)
