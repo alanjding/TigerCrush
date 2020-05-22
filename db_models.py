@@ -5,24 +5,9 @@
 # Defines database models in SQLAlchemy.
 # -------------------------------------------------------------------------------
 
-from app import appl
-from flask_sqlalchemy import SQLAlchemy
-import os
+from app import db
 
 # -------------------------------------------------------------------------------
-
-# -------------- !!! COMMENT OUT IF RUNNING ON HEROKU !!! -------------- #
-# DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
-# app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
-# ---------------------------------------------------------------------- #
-
-# --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
-appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-# ---------------------------------------------------------------------- #
-
-appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True})
 
 class User(db.Model):
 
