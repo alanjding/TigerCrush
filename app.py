@@ -77,13 +77,23 @@ def index():
         netid = request.args.get('netid')
     # end temporary stuff
 
+    err = request.args.get('err')
+
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = getSecretAdmirers(netid)
 
-    html = render_template("index.html",
-                           netid=netid,
-                           remCrushes=remCrushes,
-                           numSecretAdmirers=numSecretAdmirers)
+    if err is not None:
+        html = render_template("index.html",
+                               netid=netid,
+                               remCrushes=remCrushes,
+                               numSecretAdmirers=numSecretAdmirers,
+                               err=err)
+    else:
+        html = render_template("index.html",
+                               netid=netid,
+                               remCrushes=remCrushes,
+                               numSecretAdmirers=numSecretAdmirers)
+
     return make_response(html)
 
 # -----------------------------------------------------------------------
