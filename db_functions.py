@@ -121,8 +121,8 @@ def getRemCrushes(netid):
 # -------------------------------------------------------------------------------
 # Retrieve the secret admirers that a given person has.
 #
-# Upon success, return a list of admirers. Upon failure, print a descriptive
-# error and return a ser-readable error to display on the web page.
+# Upon success, returns the number of secret admirers. Upon failure, print a
+# descriptive error and return a ser-readable error to display on the web page.
 # -------------------------------------------------------------------------------
 
 def getSecretAdmirers(netid):
@@ -133,7 +133,9 @@ def getSecretAdmirers(netid):
         .filter(Crush.crushing not in crushes) \
         .all()
 
-    return [s.crushing for s in secretAdmirers]
+    # for debuggin purposes only! delete later
+    print([s.crushing for s in secretAdmirers])
+    return len(secretAdmirers)
 
 # -------------------------------------------------------------------------------
 #                         getFormattedStudentInfoList()
