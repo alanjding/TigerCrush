@@ -46,7 +46,7 @@ mail = Mail(appl)
 # ---------------------------------------------------------------------- #
 
 # --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 # ---------------------------------------------------------------------- #
 
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
