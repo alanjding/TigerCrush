@@ -136,8 +136,8 @@ def getSecretAdmirers(netid):
         .all()
 
     # for debugging purposes only! delete later
-    print([s.crushing for s in secretAdmirers])
-    return len(secretAdmirers)
+    print([s.crushing for s in secret_admirers])
+    return len(secret_admirers)
 
 # -------------------------------------------------------------------------------
 #                         getFormattedStudentInfoList()
