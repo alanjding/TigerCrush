@@ -181,7 +181,7 @@
                 },
                 {
                     name: 'students',
-                    source: students
+                    source: substringMatcher(students)
                 }).blur(function () { // ensure user picks one of the suggestions
                     if (students.indexOf($(this).val()) === -1) {
                         $('#crushSelector').val('');
