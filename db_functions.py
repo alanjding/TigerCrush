@@ -39,14 +39,27 @@ def addUser(netid, name, year):
 def addCrush(crushing, crushed_on):
     # do nothing if user attempts to crush on themselves
     if crushing == crushed_on:
-        return False
+        return False, "We love to see the self love there, but you're probably " + \
+                      "using TigerCrush to get matched to someone else. As a " + \
+                      "result, we don't allow adding yourself as a crush. Sorry!"
 
-    # TODO: do nothing if crush already exists
+    # send user error if crush already exists
+    existing = db.session.query(Crush) \
+        .filter_by(crushing=crushing, crushed_on=crushed_on) \
+        .all()
+
+    if len(existing) > 0:
+        return False, "Looks like you're already crushing on the person" + \
+                      "you just tried to add."
+
+    # send user error if user is already at the crush limit
+    if getRemCrushes(crushing) <= 0:
+        return False, "You've reached the limit for the number of crushes you can add."
 
     crush = Crush(crushing=crushing, crushed_on=crushed_on)
     db.session.add(crush)
     db.session.commit()
-    return isMatch(crushing, crushed_on)
+    return isMatch(crushing, crushed_on), None
 
 # -------------------------------------------------------------------------------
 #                                   isMatch()
@@ -113,7 +126,6 @@ def getName(netid):
 # display on the web page.
 # -------------------------------------------------------------------------------
 
-# TODO: fix
 def getMatches(netid):
     myCrushes = getCrushNames(netid)
 
@@ -152,18 +164,22 @@ def getRemCrushes(netid):
 # error and return a user-readable error to display on the web page.
 # -------------------------------------------------------------------------------
 
-# TODO: fix
 def getSecretAdmirers(netid):
     myCrushes = getCrushNames(netid)
+    print('my crushes:')
+    print(myCrushes)
 
     crushingOnMeRows = db.session.query(Crush) \
         .filter_by(crushed_on=netid) \
         .all()
 
     crushingOnMe = [crush.crushing for crush in crushingOnMeRows]
+    print('crushing on me:')
+    print(crushingOnMe)
+
     secretAdmirers = list(set(crushingOnMe) - set(myCrushes))
 
-    # for debugging purposes only! delete later
+    # all prints for debugging purposes only! delete later
     print('secret admirers:')
     print(secretAdmirers)
     return len(secretAdmirers)

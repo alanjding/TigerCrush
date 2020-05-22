@@ -1,7 +1,8 @@
 # -------------------------------------------------------------------------------
 # app.py
-# Authors: Alan Ding   (Princeton '22, CS BSE)
-#          Oleg Golev  (Princeton '22, CS BSE)
+# Authors: Alan Ding    (Princeton '22, CS BSE)
+#          Oleg Golev   (Princeton '22, CS BSE)
+#          Gerald Huang (Princeton '22, EE BSE)
 #
 # Running module and the routing middle-tier.
 # -------------------------------------------------------------------------------
@@ -131,6 +132,9 @@ def matches():
 # adds a crush (crushNetid arg) for a given user (netid arg)
 @appl.route('/addCrush', methods=['GET', 'POST'])
 def addCrushEndpoint():
+    netid = 'guest'
+    err = None
+
     if request.method == 'POST':
         netid = request.form.get('netid')
         crushNetid = request.form.get('crushNetid')
@@ -139,14 +143,17 @@ def addCrushEndpoint():
         print('addCrush netid argument value: ' + netid)
         print('addCrush crushNetid argument value: ' + crushNetid)
 
-        matched = addCrush(netid, crushNetid)
+        matched, err = addCrush(netid, crushNetid)
         print(matched)
 
         # TODO - send email if matched
 
     # TODO - this is just placeholder code! Will need to be changed according to
     # how CAS sets authorization cookies
-    return redirect(url_for('index'))
+    if err is not None:
+        return redirect(url_for('index', netid=netid, err=err))
+    else:
+        return redirect(url_for('index', netid=netid))
 
 # -----------------------------------------------------------------------
 #                   DATABASE INITIALIZATION COMMANDS
