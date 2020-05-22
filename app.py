@@ -94,7 +94,7 @@ def about():
 # helper endpoint that returns formatted Tigerbook data
 @app.route('/studentInfo')
 def studentInfo():
-    return getFormattedStudentInfoList()
+    return {'data': getFormattedStudentInfoList()}
 
 # -----------------------------------------------------------------------
 
@@ -120,6 +120,7 @@ def addCrushEndpoint():
     if request.method == 'POST':
         netid = request.form.get('netid')
         crushNetid = request.form.get('crushNetid')
+        crushNetid = crushNetid.split(' ', 1)[0]
 
         print('addCrush netid argument value: ' + netid)
         print('addCrush crushNetid argument value: ' + crushNetid)
