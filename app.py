@@ -18,7 +18,6 @@ from base64 import b64encode
 from datetime import datetime
 import requests
 import json
-from send_emails import send_match_email
 
 # -----------------------------------------------------------------------
 #                         APP AND DATABASE SETUP
@@ -56,6 +55,7 @@ db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True, 'pool_size': 20, 'm
 
 from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers,\
     getFormattedStudentInfoList, getCrushes, getMatches, getName
+from send_emails import send_match_email
 
 # -----------------------------------------------------------------------
 #                           PER-REQUEST SETUP
