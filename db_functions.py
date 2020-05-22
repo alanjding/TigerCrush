@@ -37,6 +37,12 @@ def addUser(netid, name, year):
 # -------------------------------------------------------------------------------
 
 def addCrush(crushing, crushed_on):
+    # do nothing if user attempts to crush on themselves
+    if crushing == crushed_on:
+        return False
+
+    # TODO: do nothing if crush already exists
+
     crush = Crush(crushing=crushing, crushed_on=crushed_on)
     db.session.add(crush)
     db.session.commit()
@@ -101,10 +107,7 @@ def getName(netid):
 # -------------------------------------------------------------------------------
 #                                  getMatches()
 # -------------------------------------------------------------------------------
-# Retrieve (by netid) a user's matches as a list of dictionaries with fields:
-#   netid: ""
-#   name: ""
-#   year: (int)
+# Retrieve (by netid) a user's matches as a list of netids
 #
 # Upon failure, print a descriptive error and return a ser-readable error to
 # display on the web page.
@@ -112,12 +115,14 @@ def getName(netid):
 
 # TODO: fix
 def getMatches(netid):
-    crushes = getCrushNames(netid)
+    myCrushes = getCrushNames(netid)
 
-    matches = db.session.query(Crush) \
+    crushingOnMeRows = db.session.query(Crush) \
         .filter_by(crushed_on=netid) \
-        .filter(Crush.crushing in crushes) \
         .all()
+
+    crushingOnMe = [crush.crushing for crush in crushingOnMeRows]
+    matches = list(set(myCrushes) & set(crushingOnMe))
 
     # for debugging purposes only! delete later
     print('matches:')
@@ -149,18 +154,19 @@ def getRemCrushes(netid):
 
 # TODO: fix
 def getSecretAdmirers(netid):
+    myCrushes = getCrushNames(netid)
 
-    crushes = getCrushNames(netid)
-
-    secret_admirers = db.session.query(Crush) \
+    crushingOnMeRows = db.session.query(Crush) \
         .filter_by(crushed_on=netid) \
-        .filter(Crush.crushing not in crushes) \
         .all()
+
+    crushingOnMe = [crush.crushing for crush in crushingOnMeRows]
+    secretAdmirers = list(set(crushingOnMe) - set(myCrushes))
 
     # for debugging purposes only! delete later
     print('secret admirers:')
-    print([s.crushing for s in secret_admirers])
-    return len(secret_admirers)
+    print(secretAdmirers)
+    return len(secretAdmirers)
 
 # -------------------------------------------------------------------------------
 #                         getFormattedStudentInfoList()
