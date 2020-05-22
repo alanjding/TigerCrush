@@ -47,14 +47,14 @@
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
               <form action="/addCrush" method="post">
-                <div class="form-row">
+                <div class="form-row" data-toggle="tooltip" title="You can no longer add any more crushes since you either have been matched or reached the limit.">
                   <div class="col-8">
-                    <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 or matched %}disabled data-toggle="tooltip" title="You can no longer add any more crushes since you either have been matched or reached the limit."{% endif %}>
+                    <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 or matched %}disabled{% endif %}>
                     <input id="netidStore" type="hidden" name="netid" value="{{ netid }}">
                   </div>
                   <div class="col-4">
                     <!-- TODO: make this button toggle confirm dialog and let confirmation modal initiate the submitting -->
-                    <input type="submit" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 or matched %}disabled data-toggle="tooltip" title="You can no longer add any more crushes since you either have been matched or reached the limit."{% endif %}>
+                    <input type="submit" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 or matched %}disabled{% endif %}>
                   </div>
                 </div>
               </form>
