@@ -114,7 +114,7 @@ def getMatches(netid):
 # -------------------------------------------------------------------------------
 
 def getRemCrushes(netid):
-    return 5 + len(getSecretAdmirers(netid)) - len(getCrushes(netid))
+    return 5 + getSecretAdmirers(netid) - len(getCrushes(netid))
 
 # -------------------------------------------------------------------------------
 #                              getSecretAdmirers()
