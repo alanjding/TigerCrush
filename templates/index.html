@@ -33,7 +33,7 @@
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
-              <form class="form-inline justify-content-center" style="width: 100%" action="/addCrush" method="post">
+              <form class="form-inline justify-content-center" action="/addCrush" method="post">
                 <div class="input-group">
                   <input id="crushSelector" class="form-control typeahead" style="width: auto" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required>
                   <input type="hidden" name="netid" value="{{ netid }}">
@@ -178,7 +178,7 @@
                 $('#crushSelector').typeahead({
                     hint: true,
                     highlight: true,
-                    minLength: 2
+                    minLength: 3
                 },
                 {
                     source: substringMatcher(students)
