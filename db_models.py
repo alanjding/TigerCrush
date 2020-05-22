@@ -5,7 +5,7 @@
 # Defines database models in SQLAlchemy.
 # -------------------------------------------------------------------------------
 
-from app import app
+from app import appl
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -17,12 +17,12 @@ import os
 # ---------------------------------------------------------------------- #
 
 # --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 # ---------------------------------------------------------------------- #
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app, engine_options={'pool_pre_ping': True})
+db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True})
 
 class User(db.Model):
 

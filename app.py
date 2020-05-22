@@ -23,15 +23,15 @@ import json
 
 from private import USER, PW, HOST, DB_NAME
 
-app = Flask(__name__, template_folder="templates", static_folder="static")
-app.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
+appl = Flask(__name__, template_folder="templates", static_folder="static")
+appl.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
 
 # -----------------------------------------------------------------------
 #                           PER-REQUEST SETUP
 #                 !!! COMMENT OUT IF RUNNING LOCALLY !!!
 # -----------------------------------------------------------------------
 
-@app.before_request
+@appl.before_request
 def redirectHTTP():
     # redirect http to https
     if request.url[0:5] != 'https':
@@ -41,15 +41,15 @@ def redirectHTTP():
 #                         PAGE ROUTING SECTION
 # -----------------------------------------------------------------------
 
-@app.route('/')
-@app.route('/login')
+@appl.route('/')
+@appl.route('/login')
 def login():
     html = render_template("login.html")
     return make_response(html)
 
 # -----------------------------------------------------------------------
 
-@app.route('/index')
+@appl.route('/index')
 def index():
     # temporary, will need to be replaced by CAS functionality and storing state
     # that says who's logged in as opposed to passing in a username as a request
@@ -70,14 +70,14 @@ def index():
 
 # -----------------------------------------------------------------------
 
-@app.route('/faq')
+@appl.route('/faq')
 def faq():
     html = render_template("faq.html")
     return make_response(html)
 
 # -----------------------------------------------------------------------
 
-@app.route('/about')
+@appl.route('/about')
 def about():
     html = render_template("about.html")
     return make_response(html)
@@ -87,7 +87,7 @@ def about():
 # -----------------------------------------------------------------------
 
 # helper endpoint that returns formatted Tigerbook data
-@app.route('/studentInfo')
+@appl.route('/studentInfo')
 def studentInfo():
     return {'data': getFormattedStudentInfoList()}
 
@@ -95,7 +95,7 @@ def studentInfo():
 
 # gets and formats (into a list of strings to be displayed) the crushes
 # for the user with the specified netid
-@app.route('/getCrushes')
+@appl.route('/getCrushes')
 def crushes():
     crushList = getCrushes(request.args.get('netid'))
     return {'data': [getName(crush.crushed_on) for crush in crushList]}
@@ -104,7 +104,7 @@ def crushes():
 
 # gets and formats (into a list of strings to be displayed) the matches
 # for the user with the specified netid
-@app.route('/getMatches')
+@appl.route('/getMatches')
 def matches():
     matchList = getMatches(request.args.get('netid'))
     return {'data': [getName(match.crushing) for match in matchList]}
@@ -112,7 +112,7 @@ def matches():
 # -----------------------------------------------------------------------
 
 # adds a crush (crushNetid arg) for a given user (netid arg)
-@app.route('/addCrush', methods=['GET', 'POST'])
+@appl.route('/addCrush', methods=['GET', 'POST'])
 def addCrushEndpoint():
     if request.method == 'POST':
         netid = request.form.get('netid')
@@ -137,7 +137,7 @@ def addCrushEndpoint():
 
 # resets the database such that it consists of just a list of students and no
 # crushes between any two students
-@app.cli.command(name='resetDB')
+@appl.cli.command(name='resetDB')
 def resetDB():
     print('Deleting existing data... ', end='', flush=True)
 
@@ -206,6 +206,6 @@ if __name__ == '__main__':
         print("Port must be an integer", file=stderr)
         exit(1)
 
-    app.run(host="0.0.0.0", port=int(argv[1]))
+    appl.run(host="0.0.0.0", port=int(argv[1]))
 
 # -----------------------------------------------------------------------
