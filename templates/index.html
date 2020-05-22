@@ -172,7 +172,9 @@
         $.get(
             '/studentInfo', {},
             function(result) {
-                let students = result.data;
+                let students = result.data.map(function(name) {
+                    return {value: name};
+                });
 
                 $('#crushSelector').typeahead({
                     hint: true,
@@ -181,8 +183,9 @@
                 },
                 {
                     name: 'students',
+                    displayKey: 'value',
                     source: substringMatcher(students)
-                }).blur(function () { // ensure user picks one of the suggestions
+                }).blur(function() { // ensure user picks one of the suggestions
                     if (students.indexOf($(this).val()) === -1) {
                         $('#crushSelector').val('');
                     }
