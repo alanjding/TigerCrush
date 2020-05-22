@@ -36,7 +36,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
-db.init_app(app)
 
 # -----------------------------------------------------------------------
 #                           PER-REQUEST SETUP
@@ -110,7 +109,7 @@ def studentInfo():
 @app.route('/getCrushes')
 def crushes():
     crushList = getCrushes(request.args.get('netid'))
-    return {'data': [crush.crushed_on for crush in crushList]}
+    return {'data': [getName(crush.crushed_on) for crush in crushList]}
 
 # -----------------------------------------------------------------------
 
@@ -119,7 +118,7 @@ def crushes():
 @app.route('/getMatches')
 def matches():
     matchList = getMatches(request.args.get('netid'))
-    return {'data': [match.crushing for match in matchList]}
+    return {'data': [getName(match.crushing) for match in matchList]}
 
 # -----------------------------------------------------------------------
 

@@ -83,6 +83,19 @@ def getCrushNames(netid):
     return [crush.crushed_on for crush in crushes]
 
 # -------------------------------------------------------------------------------
+#                                  getName()
+# -------------------------------------------------------------------------------
+# Returns the name of the student with the given netid
+#
+# Upon failure, print a descriptive error and return a ser-readable error to
+# display on the web page.
+# -------------------------------------------------------------------------------
+
+def getName(netid):
+    user = db.session.query(User).filter_by(netid=netid).first()
+    return "%s, %s" % (user.name, user.year)
+
+# -------------------------------------------------------------------------------
 #                                  getMatches()
 # -------------------------------------------------------------------------------
 # Retrieve (by netid) a user's matches as a list of dictionaries with fields:
@@ -95,13 +108,16 @@ def getCrushNames(netid):
 # -------------------------------------------------------------------------------
 
 def getMatches(netid):
-
     crushes = getCrushNames(netid)
 
-    return db.session.query(Crush) \
+    matches = db.session.query(Crush) \
         .filter_by(crushed_on=netid) \
         .filter(Crush.crushing in crushes) \
         .all()
+
+    # for debugging purposes only! delete later
+    print(matches)
+    return matches
 
 # -------------------------------------------------------------------------------
 #                              getRemCrushes()

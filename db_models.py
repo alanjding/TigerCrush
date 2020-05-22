@@ -5,12 +5,13 @@
 # Defines database models in SQLAlchemy.
 # -------------------------------------------------------------------------------
 
+from app import app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSON
 
 # -------------------------------------------------------------------------------
 
-db = SQLAlchemy()
+db = SQLAlchemy(app, engine_options={'pool_pre_ping': True})
 
 class User(db.Model):
 
