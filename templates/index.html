@@ -92,6 +92,7 @@
         method: 'GET',
         url: '/getCrushes?netid=' + '{{ netid }}',
         success: function(result) {
+            console.log(result)
             let students = result.data;
             console.log(students)
             if (students.length === 0) {
