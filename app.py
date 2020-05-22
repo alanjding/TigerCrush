@@ -2,12 +2,14 @@
 # app.py
 # Authors: Alan Ding   (Princeton '22, CS BSE)
 #          Oleg Golev  (Princeton '22, CS BSE)
+#          Jerry Huang (Princeton '22, EE BSE)
 #
 # Running module and the routing middle-tier.
 # -------------------------------------------------------------------------------
 
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 from sys import argv, stderr
 import os
 import hashlib
@@ -16,6 +18,7 @@ from base64 import b64encode
 from datetime import datetime
 import requests
 import json
+from send_emails import send_match_email
 
 # -----------------------------------------------------------------------
 #                         APP AND DATABASE SETUP
@@ -24,16 +27,27 @@ import json
 from private import USER, PW, HOST, DB_NAME
 
 appl = Flask(__name__, template_folder="templates", static_folder="static")
-appl.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
+appl.secret_key = os.environ.get('SECRET_KEY')
+
+mail_settings = {
+    "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
+    "MAIL_PORT": os.environ.get('MAIL_PORT'),
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
+    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),
+    "MAIL_DEFAULT_SENDER": os.environ.get('MAIL_DEFAULT_SENDER')
+}
+appl.config.update(mail_settings)
+mail = Mail(appl)
 
 # -------------- !!! COMMENT OUT IF RUNNING ON HEROKU !!! -------------- #
 # DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
-# app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+# appl.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 # ---------------------------------------------------------------------- #
 
 # --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
-appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 # ---------------------------------------------------------------------- #
 
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -140,13 +154,12 @@ def addCrushEndpoint():
         print('addCrush crushNetid argument value: ' + crushNetid)
 
         matched = addCrush(netid, crushNetid)
-        print(matched)
-
-        # TODO - send email if matched
+        if matched:
+            send_match_email(netid, crushNetid)
 
     # TODO - this is just placeholder code! Will need to be changed according to
     # how CAS sets authorization cookies
-    return redirect(url_for('index'))
+    return redirect(url_for('index?netid=' + netid))
 
 # -----------------------------------------------------------------------
 #                   DATABASE INITIALIZATION COMMANDS
