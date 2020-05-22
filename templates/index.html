@@ -173,7 +173,7 @@
     $.get(
         '/studentInfo', {},
         function(result) {
-            let students = result['data'];
+            let students = result.data;
 
             $('#crushSelector').typeahead({
                 hint: true,
