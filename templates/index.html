@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="../static/theme.css">
-  <link rel="stylesheet" href="../static/typeahead.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeahead.js-bootstrap4-css@1.0.0/typeaheadjs.css">
 </head>
 
 <body class="bg-light">
@@ -33,11 +33,15 @@
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
-              <form class="form-inline justify-content-center" action="/addCrush" method="post">
-                <div class="input-group">
-                  <input id="crushSelector" class="form-control typeahead" style="width: auto" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required>
-                  <input type="hidden" name="netid" value="{{ netid }}">
-                  <input type="submit" class="input-group-append btn btn-primary" value="Add crush!">
+              <form action="/addCrush" method="post">
+                <div class="form-row">
+                  <div class="col-8">
+                    <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required>
+                    <input type="hidden" name="netid" value="{{ netid }}">
+                  </div>
+                  <div class="col-4">
+                    <input type="submit" class="input-group-append btn btn-primary" value="Add crush!">
+                  </div>
                 </div>
               </form>
               <div id="crushList"><!-- dynamically populated --></div>
