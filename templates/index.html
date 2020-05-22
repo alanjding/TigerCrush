@@ -169,26 +169,21 @@
         };
     };
 
-    $.get(
-        '/studentInfo', {},
-        function(result) {
-            let students = result.data;
+    $(document).ready(function() {
+        $.get(
+            '/studentInfo', {},
+            function(result) {
+                let students = result.data;
 
-            $('#crushSelector').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            },
-            {
-                name: 'students',
-                source: students
-            }).blur(function () { // ensure user picks one of the suggestions
-                if (students.indexOf($(this).val()) === -1) {
-                    $('#crushSelector').val('');
-                }
-            });
-        }
-    );
+                $('#crushSelector').typeahead({source: students})
+                    .blur(function () { // ensure user picks one of the suggestions
+                        if (students.indexOf($(this).val()) === -1) {
+                            $('#crushSelector').val('');
+                        }
+                    });
+            }
+        );
+    });
   </script>
 </body>
 
