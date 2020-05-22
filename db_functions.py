@@ -133,7 +133,7 @@ def getSecretAdmirers(netid):
         .filter(Crush.crushing not in crushes) \
         .all()
 
-    # for debuggin purposes only! delete later
+    # for debugging purposes only! delete later
     print([s.crushing for s in secretAdmirers])
     return len(secretAdmirers)
 

@@ -65,7 +65,7 @@ def index():
     # end temporary stuff
 
     remCrushes = getRemCrushes(netid)
-    numSecretAdmirers = len(getSecretAdmirers(netid))
+    numSecretAdmirers = getSecretAdmirers(netid)
 
     html = render_template("index.html",
                            netid=netid,
