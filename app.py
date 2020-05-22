@@ -38,7 +38,7 @@ appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True})
+db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True, 'pool_size': 20, 'max_overflow': 0})
 
 from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers,\
     getFormattedStudentInfoList, getCrushes, getMatches, getName
