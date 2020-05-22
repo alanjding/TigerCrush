@@ -32,7 +32,7 @@
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
-              <form class="form-inline" action="/addCrush" method="post">
+              <form class="form-inline justify-content-center" action="/addCrush" method="post">
                 <div class="input-group w-100">
                   <input id="crushSelector" class="form-control typeahead" style="width: auto" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required>
                   <input type="hidden" name="netid" value="{{ netid }}">
