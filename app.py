@@ -124,7 +124,7 @@ def crushes():
 @appl.route('/getMatches')
 def matches():
     matchList = getMatches(request.args.get('netid'))
-    return {'data': [getName(match.crushing) for match in matchList]}
+    return {'data': [getName(match) for match in matchList]}
 
 # -----------------------------------------------------------------------
 
