@@ -35,7 +35,7 @@
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
               <form class="form-inline" action="/addCrush" method="post">
                 <div class="input-group w-100">
-                  <input id="crushSelector" class="form-control typeahead" placeholder="Search for crushes here..." name="crushNetid" required>
+                  <input id="crushSelector" class="form-control typeahead" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required>
                   <input type="hidden" name="netid" value="{{ netid }}">
                   <input type="submit" class="input-group-append btn btn-primary" value="Add crush!">
                 </div>
