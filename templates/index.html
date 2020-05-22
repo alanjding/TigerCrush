@@ -161,7 +161,7 @@
             // contains the substring `q`, add it to the `matches` array
             $.each(strs, function(i, str) {
               if (substrRegex.test(str)) {
-                matches.push({value: str});
+                matches.push(str);
               }
             });
 
@@ -181,8 +181,7 @@
             },
             {
                 name: 'students',
-                displayKey: 'value',
-                source: substringMatcher(students)
+                source: students
             }).blur(function () { // ensure user picks one of the suggestions
                 if (students.indexOf($(this).val()) === -1) {
                     $('#crushSelector').val('');
