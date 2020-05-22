@@ -115,7 +115,7 @@ def getMatches(netid):
 # -------------------------------------------------------------------------------
 
 def getRemCrushes(netid):
-    return 5 + len(getSecretAdmirers(netid)) - len(getCrushes(netid))
+    return 5 + getSecretAdmirers(netid) - len(getCrushes(netid))
 
 # -------------------------------------------------------------------------------
 #                              getSecretAdmirers()
@@ -135,7 +135,9 @@ def getSecretAdmirers(netid):
         .filter(Crush.crushing not in crushes) \
         .all()
 
-    return [s.crushing for s in secret_admirers]
+    # for debuggin purposes only! delete later
+    print([s.crushing for s in secretAdmirers])
+    return len(secretAdmirers)
 
 # -------------------------------------------------------------------------------
 #                         getFormattedStudentInfoList()

@@ -109,7 +109,8 @@ def studentInfo():
 # for the user with the specified netid
 @app.route('/getCrushes')
 def crushes():
-    return {'data': getCrushes(request.args.get('netid'))}
+    crushList = getCrushes(request.args.get('netid'))
+    return {'data': [crush.name for crush in crushList]}
 
 # -----------------------------------------------------------------------
 
@@ -117,7 +118,8 @@ def crushes():
 # for the user with the specified netid
 @app.route('/getMatches')
 def matches():
-    return {'data': getMatches(request.args.get('netid'))}
+    matchList = getMatches(request.args.get('netid'))
+    return {'data': [match.name for match in matchList]}
 
 # -----------------------------------------------------------------------
 
@@ -133,6 +135,7 @@ def addCrushEndpoint():
         print('addCrush crushNetid argument value: ' + crushNetid)
 
         matched = addCrush(netid, crushNetid)
+        print(matched)
 
         # TODO - send email if matched
 
