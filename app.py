@@ -9,8 +9,6 @@
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from sys import argv, stderr
-from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers,\
-    getFormattedStudentInfoList, getCrushes, getMatches, getName
 import os
 import hashlib
 import random
@@ -40,6 +38,9 @@ appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True})
+
+from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers,\
+    getFormattedStudentInfoList, getCrushes, getMatches, getName
 
 # -----------------------------------------------------------------------
 #                           PER-REQUEST SETUP
