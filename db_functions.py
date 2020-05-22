@@ -49,7 +49,7 @@ def addCrush(crushing, crushed_on):
         .all()
 
     if len(existing) > 0:
-        return False, "Looks like you're already crushing on the person" + \
+        return False, "Looks like you're already crushing on the person " + \
                       "you just tried to add."
 
     # send user error if user is already at the crush limit
