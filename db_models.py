@@ -7,9 +7,19 @@
 
 from app import app
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.dialects.postgresql import JSON
 
 # -------------------------------------------------------------------------------
+
+# -------------- !!! COMMENT OUT IF RUNNING ON HEROKU !!! -------------- #
+# DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
+# app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+# ---------------------------------------------------------------------- #
+
+# --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# ---------------------------------------------------------------------- #
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app, engine_options={'pool_pre_ping': True})
 
