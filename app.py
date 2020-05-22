@@ -110,7 +110,7 @@ def studentInfo():
 @app.route('/getCrushes')
 def crushes():
     crushList = getCrushes(request.args.get('netid'))
-    return {'data': [crush.name for crush in crushList]}
+    return {'data': [crush.crushed_on for crush in crushList]}
 
 # -----------------------------------------------------------------------
 
@@ -119,7 +119,7 @@ def crushes():
 @app.route('/getMatches')
 def matches():
     matchList = getMatches(request.args.get('netid'))
-    return {'data': [match.name for match in matchList]}
+    return {'data': [match.crushing for match in matchList]}
 
 # -----------------------------------------------------------------------
 
