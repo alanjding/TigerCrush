@@ -33,6 +33,7 @@ appl.secret_key = b'\n\x10_\xbdxBq)\xd7\xce\x80w\xbcr\xe2\xf3\xdclo\x1e0\xbadZ'
 
 # --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
 appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
 # ---------------------------------------------------------------------- #
 
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
