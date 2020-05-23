@@ -116,7 +116,10 @@ def getCrushNames(netid):
 
 def getName(netid):
     user = db.session.query(User).filter_by(netid=netid).first()
-    return "%s, %s" % (user.name, user.year)
+    if user is not None:
+        return "%s, %s" % (user.name, user.year)
+    else:
+        return "(unregistered user)"
 
 # -------------------------------------------------------------------------------
 #                                  getMatches()
