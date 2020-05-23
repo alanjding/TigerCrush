@@ -98,10 +98,11 @@ def index():
             err = "Please enter a valid netid."
             return redirect(url_for('login', err=err))
         if not isUser(netid):
-            err = "We apologize, but your netid is not recorded on the " + \
-                  "Tigerbook database. For this reason, we cannot let you " + \
-                  "use the application.\nWe will work to accomodate this in " + \
-                  "the future. Sorry for the inconvenience."
+            err = "Either you entered an invalid netid or your netid " + \
+                  "cannot be found on the Tigerbook database. If your case " + \
+                  "is the latter, TigerCrush currently supports only " + \
+                  "listed undergraduates. We will work to accomodate more people " + \
+                  "in the future. Sorry for the inconvenience."
             return redirect(url_for('login', err=err))
     # end temporary stuff
 
