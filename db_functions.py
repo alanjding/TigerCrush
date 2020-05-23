@@ -71,6 +71,8 @@ def addCrush(crushing, crushed_on):
 # -------------------------------------------------------------------------------
 
 def isMatch(netid1, netid2):
+    print(netid2 in getCrushNames(netid1))
+    print(netid1 in getCrushNames(netid2))
     return netid2 in getCrushNames(netid1) and netid1 in getCrushNames(netid2)
 
 # -------------------------------------------------------------------------------
