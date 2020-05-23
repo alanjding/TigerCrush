@@ -111,7 +111,11 @@ def index():
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = getSecretAdmirers(netid)
     matched = len(getMatches(netid)) > 0
-    name = getName(netid).split()[0]
+    name = getName(netid).split()
+    if len(name) > 0:
+        name = name[0]
+    else:
+        name = ''
 
     if err is not None:
         html = render_template("index.html",

@@ -53,8 +53,7 @@
                     <input id="netidStore" type="hidden" name="netid" value="{{ netid }}">
                   </div>
                   <div class="col-4">
-                    <!-- TODO: make this button toggle confirm dialog and let confirmation modal initiate the submitting -->
-                    <input type="button" class="input-group-append btn btn-primary" value="Add crush!" data-toggle="modal" data-target="#confirmModal" {% if remCrushes == 0 or matched %}disabled{% endif %}>
+                    <input id="addCrushButton" type="button" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 or matched %}disabled{% endif %}>
                   </div>
                 </div>
               </form>
@@ -91,7 +90,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <p class="text-center">Are you sure you want to add [name] as a crush?</p>
+          <p class="text-center">Are you sure you want to add this crush?</p>
           <p class="text-center">This action cannot be undone.</p>
           <div class="modal-footer">
             <a href="#" id="submitButton" class="btn btn-primary">Yes</a> <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
