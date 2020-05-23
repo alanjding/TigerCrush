@@ -40,7 +40,9 @@ def addCrush(crushing, crushed_on):
     # do nothing if user attempts to crush on themselves
     if crushing == crushed_on:
         return False, "We love to see self love, but you're probably " + \
-                      "using TigerCrush to get matched to someone else."
+                      "using TigerCrush to get matched to someone else. " + \
+                      "For this reason, we don't allow you to add yourself " + \
+                      "as your own crush. Sorry!"
 
     # send user error if crush already exists
     existing = db.session.query(Crush) \
@@ -58,7 +60,7 @@ def addCrush(crushing, crushed_on):
     crush = Crush(crushing=crushing, crushed_on=crushed_on)
     db.session.add(crush)
     db.session.commit()
-    return isMatch(crushing, crushed_on)
+    return isMatch(crushing, crushed_on), None
 
 # -------------------------------------------------------------------------------
 #                                   isMatch()

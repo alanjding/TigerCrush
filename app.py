@@ -169,7 +169,7 @@ def addCrushEndpoint():
         print('addCrush netid argument value: ' + netid)
         print('addCrush crushNetid argument value: ' + crushNetid)
 
-        matched = addCrush(netid, crushNetid)
+        matched, err = addCrush(netid, crushNetid)
         if matched:
             send_match_email(netid, crushNetid)
 
