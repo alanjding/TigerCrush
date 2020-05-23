@@ -59,7 +59,7 @@ def addCrush(crushing, crushed_on):
     crush = Crush(crushing=crushing, crushed_on=crushed_on)
     db.session.add(crush)
     db.session.commit()
-    return isMatch(crushing, crushed_on), None
+    return isMatch(crushing, crushed_on)
 
 # -------------------------------------------------------------------------------
 #                                   isMatch()
