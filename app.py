@@ -75,7 +75,8 @@ def redirectHTTP():
 @appl.route('/')
 @appl.route('/login')
 def login():
-    html = render_template("login.html")
+    err = request.args.get('err')
+    html = render_template("login.html", err=err)
     return make_response(html)
 
 # -----------------------------------------------------------------------
