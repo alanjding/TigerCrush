@@ -71,13 +71,7 @@ def addCrush(crushing, crushed_on):
 # -------------------------------------------------------------------------------
 
 def isMatch(netid1, netid2):
-    forward = (netid2 in getCrushNames(netid1))
-    print("Forward: " + str(forward))
-    backward = (netid1 in getCrushNames(netid2))
-    print("Backward: " + str(backward))
-    matched = forward and backward
-    print("Match: " + str(matched))
-    return matched
+    return netid2 in getCrushNames(netid1) and netid1 in getCrushNames(netid2)
 
 # -------------------------------------------------------------------------------
 #                                  getCrushes()
