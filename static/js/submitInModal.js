@@ -9,6 +9,8 @@ $('#addCrushButton').click(function() {
         $('#crushSelector').addClass('is-invalid');
     }
     else {
+        $('#confirmationMsg').html('Are you sure you want to add ' +
+            $('#crushSelector').val() + ' as a crush?');
         $('#confirmModal').modal('show');
     }
 });

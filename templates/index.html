@@ -53,7 +53,9 @@
                     <input id="netidStore" type="hidden" name="netid" value="{{ netid }}">
                   </div>
                   <div class="col-4">
-                    <input id="addCrushButton" type="button" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 or matched %}disabled{% endif %}>
+                    <span class="float-right">
+                      <input id="addCrushButton" type="button" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 or matched %}disabled{% endif %}>
+                    </span>
                   </div>
                 </div>
               </form>
@@ -90,7 +92,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <p class="text-center">Are you sure you want to add this crush?</p>
+          <p class="text-center" id="confirmationMsg">Are you sure you want to add this crush?</p>
           <p class="text-center">This action cannot be undone.</p>
           <div class="modal-footer">
             <a href="#" id="submitButton" class="btn btn-primary">Yes</a> <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
