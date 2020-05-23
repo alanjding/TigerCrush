@@ -1,3 +1,5 @@
+// Author: Alan Ding
+
 // dynamically populate crush list
 $.ajax({
     method: 'GET',

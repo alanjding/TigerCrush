@@ -1,3 +1,5 @@
+// Author: Alan Ding
+
 // autocompletion engine for front-end crush search dropdown
 let substringMatcher = function(strs) {
     return function findMatches(q, cb) {

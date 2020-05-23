@@ -46,7 +46,7 @@
             <div class="card-body">
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
-              <form action="/addCrush" method="post">
+              <form id="addCrushForm" action="/addCrush" method="post">
                 <div class="form-row" {% if remCrushes == 0 or matched %}data-toggle="tooltip" title="You can no longer add any more crushes since you either have been matched or reached the limit."{% endif %}>
                   <div class="col-8">
                     <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 or matched %}disabled{% endif %}>
@@ -54,7 +54,7 @@
                   </div>
                   <div class="col-4">
                     <!-- TODO: make this button toggle confirm dialog and let confirmation modal initiate the submitting -->
-                    <input type="submit" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 or matched %}disabled{% endif %}>
+                    <input type="button" class="input-group-append btn btn-primary" value="Add crush!" data-toggle="modal" data-target="#confirmModal" {% if remCrushes == 0 or matched %}disabled{% endif %}>
                   </div>
                 </div>
               </form>
@@ -94,7 +94,7 @@
           <p class="text-center">Are you sure you want to add [name] as a crush?</p>
           <p class="text-center">This action cannot be undone.</p>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Yes</button> <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
+            <a href="#" id="submitButton" class="btn btn-primary">Yes</a> <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
           </div>
         </div>
       </div>
@@ -106,11 +106,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.2/typeahead.bundle.min.js"></script>
   <script src="../static/js/populatelists.js"></script>
   <script src="../static/js/autocomplete.js"></script>
-  <script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-  </script>
+  <script src="../static/js/tooltips.js"></script>
+  <script src="../static/js/submitInModal.js"></script>
 </body>
 
 </html>
