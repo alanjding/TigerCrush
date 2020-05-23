@@ -76,7 +76,10 @@ def redirectHTTP():
 @appl.route('/login')
 def login():
     err = request.args.get('err')
-    html = render_template("login.html", err=err)
+    if err is not None:
+        html = render_template("login.html", err=err)
+    else:
+        html = render_template("login.html")
     return make_response(html)
 
 # -----------------------------------------------------------------------
@@ -91,10 +94,13 @@ def index():
 
     if 'netid' in request.args:
         netid = request.args.get('netid')
+        if netid.strip() == '':
+            err = "Please enter a valid netid."
+            return redirect(url_for('login', err=err))
         if not isUser(netid):
             err = "We apologize, but your netid is not recorded on the " + \
-                  "Tigerbook database. For this reason, we cannot let you" + \
-                  "use the application. We will work to accomodate this in " + \
+                  "Tigerbook database. For this reason, we cannot let you " + \
+                  "use the application.\nWe will work to accomodate this in " + \
                   "the future. Sorry for the inconvenience."
             return redirect(url_for('login', err=err))
     # end temporary stuff
