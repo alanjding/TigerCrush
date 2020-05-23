@@ -198,3 +198,11 @@ def getFormattedStudentInfoList():
     return r
 
 # -------------------------------------------------------------------------------
+
+def isUser(netid):
+    user = db.session.query(User).filter_by(netid=netid).first()
+    if user is None:
+        return False
+    return True
+
+# -------------------------------------------------------------------------------
