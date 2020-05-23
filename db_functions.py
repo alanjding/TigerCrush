@@ -39,9 +39,8 @@ def addUser(netid, name, year):
 def addCrush(crushing, crushed_on):
     # do nothing if user attempts to crush on themselves
     if crushing == crushed_on:
-        return False, "We love to see the self love there, but you're probably " + \
-                      "using TigerCrush to get matched to someone else. As a " + \
-                      "result, we don't allow adding yourself as a crush. Sorry!"
+        return False, "We love to see self love, but you're probably " + \
+                      "using TigerCrush to get matched to someone else."
 
     # send user error if crush already exists
     existing = db.session.query(Crush) \
