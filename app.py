@@ -54,7 +54,7 @@ appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True, 'pool_size': 20, 'max_overflow': 0})
 
 from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers,\
-    getFormattedStudentInfoList, getCrushes, getMatches, getName
+    getFormattedStudentInfoList, getCrushes, getMatches, getName, isUser
 from send_emails import send_match_email
 
 # -----------------------------------------------------------------------
@@ -86,8 +86,16 @@ def index():
     # that says who's logged in as opposed to passing in a username as a request
     # argument
     netid = 'guest'
+    name = 'guest'
+
     if 'netid' in request.args:
         netid = request.args.get('netid')
+        if not isUser(netid):
+            err = "We apologize, but your netid is not recorded on the " + \
+                  "Tigerbook database. For this reason, we cannot let you" + \
+                  "use the application. We will work to accomodate this in " + \
+                  "the future. Sorry for the inconvenience."
+            return redirect(url_for('login', err=err))
     # end temporary stuff
 
     err = request.args.get('err')
@@ -95,10 +103,12 @@ def index():
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = getSecretAdmirers(netid)
     matched = len(getMatches(netid)) > 0
+    name = getName(netid).split()[0]
 
     if err is not None:
         html = render_template("index.html",
                                netid=netid,
+                               name=name,
                                remCrushes=remCrushes,
                                numSecretAdmirers=numSecretAdmirers,
                                matched=matched,
@@ -106,6 +116,7 @@ def index():
     else:
         html = render_template("index.html",
                                netid=netid,
+                               name=name,
                                remCrushes=remCrushes,
                                numSecretAdmirers=numSecretAdmirers,
                                matched=matched)
