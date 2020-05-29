@@ -83,7 +83,7 @@
               <h5 class="card-title text-primary"><b>Your Matches</b></h5>
               <div id="matchList"><!-- dynamically populated --></div>
               <h5 class="card-title text-primary"><b>Your Secret Admirers</b></h5>
-              <p class="card-text"><b class="text-primary">{{ numSecretAdmirers }}</b> people that you don't have a crush on have a crush on you!</p>
+              <p class="card-text"><b class="text-primary">{{ numSecretAdmirers }}</b> {% if numSecretAdmirers == 1 %}person{% else %}people{% endif %} that you don't have a crush on have a crush on you!</p>
             </div>
           </div>
         </div>
