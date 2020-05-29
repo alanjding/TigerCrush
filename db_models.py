@@ -17,6 +17,7 @@ class User(db.Model):
     name = db.Column(db.String, nullable=False)
     year = db.Column(db.String, nullable=False)
     visible = db.Column(db.Boolean, nullable=False, default=True)
+    firstTime = db.Column(db.Boolean, nullable=False, default=True)
     # contact_info = db.Column(JSON)
 
     def __repr__(self):

@@ -17,8 +17,21 @@
   {% if err is defined %}
     <div class="py-2">
       <div class="container">
-        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
           {{ err }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <!--------------------------------------------------------------------------->
+  {% if firstTime %}
+    <div class="py-2">
+      <div class="container">
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          Welcome to TigerCrush! This application sends emails from a non-princeton.edu account to your princeton.edu inbox to notify you of any matches. If you would like to view the emails, <b>you need to whitelist us on Proofpoint first: click the "Whitelist Us!" link above for instructions!</b> If you would prefer to continue letting Proofpoint filter our emails, that's fine too. Just be sure to check TigerCrush often to see if you've been matched and to get the email address of your match!
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -47,14 +60,14 @@
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> crushes.</p>
               <form id="addCrushForm" action="/addCrush" method="post">
-                <div class="form-row" {% if remCrushes == 0 or matched %}data-toggle="tooltip" title="You can no longer add any more crushes since you either have been matched or reached the limit."{% endif %}>
+                <div class="form-row" {% if remCrushes == 0 %}data-toggle="tooltip" title="You can no longer add any more crushes since you either have been matched or reached the limit."{% endif %}>
                   <div class="col-8">
-                    <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 or matched %}disabled{% endif %}>
+                    <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 %}disabled{% endif %}>
                     <input id="netidStore" type="hidden" name="netid" value="{{ netid }}">
                   </div>
                   <div class="col-4">
                     <span class="float-right">
-                      <input id="addCrushButton" type="button" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 or matched %}disabled{% endif %}>
+                      <input id="addCrushButton" type="button" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 %}disabled{% endif %}>
                     </span>
                   </div>
                 </div>

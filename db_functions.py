@@ -209,3 +209,15 @@ def isUser(netid):
     return True
 
 # -------------------------------------------------------------------------------
+
+def isFirstTime(netid):
+    user = db.session.query(User).filter_by(netid=netid).first()
+    return user.firstTime
+
+# -------------------------------------------------------------------------------
+
+def removeFirstTime(netid):
+    user = db.session.query(User).filter_by(netid=netid).first()
+    user.firstTime = False
+
+# -------------------------------------------------------------------------------

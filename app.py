@@ -53,8 +53,9 @@ appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True, 'pool_size': 20, 'max_overflow': 0})
 
-from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers,\
-    getFormattedStudentInfoList, getCrushes, getMatches, getName, isUser
+from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers, \
+    getFormattedStudentInfoList, getCrushes, getMatches, getName, isUser, \
+    isFirstTime, removeFirstTime
 from send_emails import send_match_email
 
 # -----------------------------------------------------------------------
@@ -108,6 +109,7 @@ def index():
 
     err = request.args.get('err')
 
+    firstTime = isFirstTime(netid)
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = getSecretAdmirers(netid)
     matched = len(getMatches(netid)) > 0
@@ -117,11 +119,16 @@ def index():
     else:
         name = ''
 
+    if firstTime:
+        # TODO: SEND WELCOME EMAIL
+        removeFirstTime(netid)
+
     if err is not None:
         html = render_template("index.html",
                                netid=netid,
                                name=name,
                                remCrushes=remCrushes,
+                               firstTime=firstTime,
                                numSecretAdmirers=numSecretAdmirers,
                                matched=matched,
                                err=err)
@@ -130,6 +137,7 @@ def index():
                                netid=netid,
                                name=name,
                                remCrushes=remCrushes,
+                               firstTime=firstTime,
                                numSecretAdmirers=numSecretAdmirers,
                                matched=matched)
 
@@ -147,6 +155,13 @@ def faq():
 @appl.route('/about')
 def about():
     html = render_template("about.html")
+    return make_response(html)
+
+# -----------------------------------------------------------------------
+
+@appl.route('/whitelist')
+def about():
+    html = render_template("whitelist.html")
     return make_response(html)
 
 # -----------------------------------------------------------------------
@@ -174,7 +189,8 @@ def crushes():
 @appl.route('/getMatches')
 def matches():
     matchList = getMatches(request.args.get('netid'))
-    return {'data': [getName(match) for match in matchList]}
+    return {'data': ['%s (%s@princeton.edu)' % (getName(match), match)
+                     for match in matchList]}
 
 # -----------------------------------------------------------------------
 
