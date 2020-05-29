@@ -219,5 +219,6 @@ def isFirstTime(netid):
 def removeFirstTime(netid):
     user = db.session.query(User).filter_by(netid=netid).first()
     user.firstTime = False
+    db.session.commit()
 
 # -------------------------------------------------------------------------------
