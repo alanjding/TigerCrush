@@ -160,7 +160,7 @@ def about():
 # -----------------------------------------------------------------------
 
 @appl.route('/whitelist')
-def about():
+def whitelist():
     html = render_template("whitelist.html")
     return make_response(html)
 
