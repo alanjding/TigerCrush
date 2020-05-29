@@ -212,13 +212,17 @@ def isUser(netid):
 
 def isFirstTime(netid):
     user = db.session.query(User).filter_by(netid=netid).first()
-    return user.firstTime
+    if user is not None:
+        return user.firstTime
+
+    return False
 
 # -------------------------------------------------------------------------------
 
 def removeFirstTime(netid):
     user = db.session.query(User).filter_by(netid=netid).first()
-    user.firstTime = False
-    db.session.commit()
+    if user is not None:
+        user.firstTime = False
+        db.session.commit()
 
 # -------------------------------------------------------------------------------
