@@ -43,10 +43,10 @@
         <div class="row">
           <div class="col-3"></div>
           <div class="col-6">
-             <form class="form-inline w-100" action="login_user" method="get" align="center">
+             <form action="login_user" method="get" align="center">
                 <div class="input-group w-100">
                   {% if CAS == False: %}
-                  <input type="text" class="form-control" placeholder="netid" name="netid">
+                  <input type="text" placeholder="netid" name="netid">
                   {% endif %}
                   <div class="input-group-append"><input class="btn btn-primary mx-1" type="submit" value="Login with Princeton NetID"></div>
                 </div>
