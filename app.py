@@ -84,7 +84,7 @@ def check_user(session):
 
 # -----------------------------------------------------------------------
 
-@app.route('/login_user', methods=['GET'])
+@appl.route('/login_user', methods=['GET'])
 def login_user():
 
     invalid_user_err = "Unfortunately, your netid cannot be found on the " + \
