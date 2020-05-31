@@ -10,6 +10,7 @@
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from CASClient import CASClient
 from sys import argv, stderr
 import os
 import hashlib
@@ -20,10 +21,14 @@ import requests
 import json
 
 # -----------------------------------------------------------------------
-#                         APP AND DATABASE SETUP
+#                          ENABLE / DISABLE CAS
 # -----------------------------------------------------------------------
 
-from private import USER, PW, HOST, DB_NAME
+CAS = True
+
+# -----------------------------------------------------------------------
+#                         APP AND DATABASE SETUP
+# -----------------------------------------------------------------------
 
 appl = Flask(__name__, template_folder="templates", static_folder="static")
 appl.secret_key = os.environ.get('SECRET_KEY')
@@ -37,10 +42,12 @@ mail_settings = {
     "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),
     "MAIL_DEFAULT_SENDER": os.environ.get('MAIL_DEFAULT_SENDER')
 }
+
 appl.config.update(mail_settings)
 mail = Mail(appl)
 
 # -------------- !!! COMMENT OUT IF RUNNING ON HEROKU !!! -------------- #
+# from private import USER, PW, HOST, DB_NAME
 # DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
 # appl.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 # ---------------------------------------------------------------------- #
@@ -57,6 +64,53 @@ from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers, \
     getFormattedStudentInfoList, getCrushes, getMatches, getName, isUser, \
     isFirstTime, removeFirstTime
 from send_emails import send_match_email
+
+# -----------------------------------------------------------------------
+#                           AUTHENTICATION
+#                 !!! COMMENT OUT IF RUNNING LOCALLY !!!
+# -----------------------------------------------------------------------
+
+# returns the username and True or an error message and False
+def check_user(session):
+    if CAS:
+        username, err = CASClient().authenticate('netid')
+        return username, err
+    else:
+        if 'netid' in session:
+            return session['netid'], False
+        else:
+            err = "Please log in before using this application."
+            return err, True
+
+# -----------------------------------------------------------------------
+
+@app.route('/login_student', methods=['GET'])
+def login_user():
+
+    invalid_user_err = "Unfortunately, your netid cannot be found on the " + \
+                       "Tigerbook database. TigerCrush currently supports " + \
+                       "only listed undergraduates. We will work to " + \
+                       "accomodate more people in the future. Sorry for " + \
+                       "the inconvenience."
+
+    if CAS:
+        username, err = CASClient().authenticate('netid')
+        if err:
+            return redirect(url_for('login', err=username))
+        if not isUser(username):
+            return redirect(url_for('login', err=invalid_user_err))
+        return redirect(url_for('index'))
+
+    else:
+        netid = request.args.get('netid')
+        if netid == None or netid.strip() == '':
+            err = "Please enter your netid to use this application."
+            return redirect(url_for('login', err=err))
+        if not isUser(netid):
+            return redirect(url_for('login', err=invalid_user_err))
+
+        session['netid'] = netid
+        return redirect(url_for('index'))
 
 # -----------------------------------------------------------------------
 #                           PER-REQUEST SETUP
@@ -76,70 +130,50 @@ def redirectHTTP():
 @appl.route('/')
 @appl.route('/login')
 def login():
+
     err = request.args.get('err')
     if err is not None:
         html = render_template("login.html", err=err)
     else:
-        html = render_template("login.html")
+        html = render_template("login.html", CAS=CAS)
     return make_response(html)
 
 # -----------------------------------------------------------------------
 
 @appl.route('/index')
 def index():
-    # temporary, will need to be replaced by CAS functionality and storing state
-    # that says who's logged in as opposed to passing in a username as a request
-    # argument
-    netid = 'guest'
-    name = 'guest'
 
-    if 'netid' in request.args:
-        netid = request.args.get('netid')
-        if netid.strip() == '':
-            err = "Please enter a valid netid."
-            return redirect(url_for('login', err=err))
-        if not isUser(netid):
-            err = "Either you entered an invalid netid or your netid " + \
-                  "cannot be found on the Tigerbook database. If your case " + \
-                  "is the latter, TigerCrush currently supports only " + \
-                  "listed undergraduates. We will work to accomodate more people " + \
-                  "in the future. Sorry for the inconvenience."
-            return redirect(url_for('login', err=err))
-    # end temporary stuff
+    # validate the current user session
+    netid, err = check_user(session)
+    if err:
+        return redirect(url_for('login', err=netid))
 
     err = request.args.get('err')
+    if err is None:
+        err = ""
 
     firstTime = isFirstTime(netid)
     remCrushes = getRemCrushes(netid)
     numSecretAdmirers = getSecretAdmirers(netid)
     matched = len(getMatches(netid)) > 0
     name = getName(netid).split()
-    if len(name) > 0:
-        name = name[0]
+    if name == '(unregistered user)':
+        name = netid
     else:
-        name = ''
+        name = name[0]
 
     if firstTime:
         # TODO: SEND WELCOME EMAIL
         removeFirstTime(netid)
 
-    if err is not None:
-        html = render_template("index.html",
-                               netid=netid,
-                               name=name,
-                               remCrushes=remCrushes,
-                               firstTime=firstTime,
-                               numSecretAdmirers=numSecretAdmirers,
-                               matched=matched,
-                               err=err)
-    else:
-        html = render_template("index.html",
-                               netid=netid,
-                               name=name,
-                               remCrushes=remCrushes,
-                               firstTime=firstTime,
-                               numSecretAdmirers=numSecretAdmirers,
-                               matched=matched)
+    html = render_template("index.html",
+                           netid=netid,
+                           name=name,
+                           remCrushes=remCrushes,
+                           firstTime=firstTime,
+                           numSecretAdmirers=numSecretAdmirers,
+                           matched=matched,
+                           err=err)
 
     return make_response(html)
 
@@ -171,6 +205,12 @@ def whitelist():
 # helper endpoint that returns formatted Tigerbook data
 @appl.route('/studentInfo')
 def studentInfo():
+
+    # validate the current user session
+    netid, err = check_user(session)
+    if err:
+        return redirect(url_for('login', err=netid))
+
     return {'data': getFormattedStudentInfoList()}
 
 # -----------------------------------------------------------------------
@@ -179,6 +219,12 @@ def studentInfo():
 # for the user with the specified netid
 @appl.route('/getCrushes')
 def crushes():
+
+    # validate the current user session
+    netid, err = check_user(session)
+    if err:
+        return redirect(url_for('login', err=netid))
+
     crushList = getCrushes(request.args.get('netid'))
     return {'data': [getName(crush.crushed_on) for crush in crushList]}
 
@@ -188,6 +234,12 @@ def crushes():
 # for the user with the specified netid
 @appl.route('/getMatches')
 def matches():
+
+    # validate the current user session
+    netid, err = check_user(session)
+    if err:
+        return redirect(url_for('login', err=netid))
+
     matchList = getMatches(request.args.get('netid'))
     return {'data': ['%s (%s@princeton.edu)' % (getName(match), match)
                      for match in matchList]}
@@ -197,11 +249,13 @@ def matches():
 # adds a crush (crushNetid arg) for a given user (netid arg)
 @appl.route('/addCrush', methods=['GET', 'POST'])
 def addCrushEndpoint():
-    netid = 'guest'
-    err = None
+
+    # validate the current user session
+    netid, err = check_user(session)
+    if err:
+        return redirect(url_for('login', err=netid))
 
     if request.method == 'POST':
-        netid = request.form.get('netid')
         crushNetid = request.form.get('crushNetid')
         crushNetid = crushNetid.split(' ', 1)[0]
 
@@ -212,12 +266,9 @@ def addCrushEndpoint():
         if matched:
             send_match_email(netid, crushNetid)
 
-    # TODO - this is just placeholder code! Will need to be changed according to
-    # how CAS sets authorization cookies
     if err is not None:
-        return redirect(url_for('index', netid=netid, err=err))
-    else:
-        return redirect(url_for('index', netid=netid))
+        err = ""
+    return redirect(url_for('index', netid=netid, err=err))
 
 # -----------------------------------------------------------------------
 #                   DATABASE INITIALIZATION COMMANDS
