@@ -47,8 +47,13 @@
                 <div class="input-group w-100">
                   {% if CAS == False: %}
                   <input type="text" placeholder="netid" name="netid">
-                  {% endif %}
                   <div class="input-group-append"><input class="btn btn-primary mx-1" type="submit" value="Login with Princeton NetID"></div>
+                  {% else: %}
+                  <div class="col text-center">
+                  <button class="btn btn-default">Centered button</button>
+                  </div>
+                  {% endif %}
+
                 </div>
               </form>
           </div>
