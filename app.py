@@ -95,7 +95,8 @@ def login_user():
                        "the inconvenience."
 
     if CAS:
-        username, err = CASClient().authenticate('netid')
+        cas = CASClient()
+        username, err = CASClient.authenticate(cas, 'netid')
         if err:
             return redirect(url_for('login', err=username))
         if not isUser(username):
