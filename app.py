@@ -73,8 +73,7 @@ from send_emails import send_match_email
 # returns the username and True or an error message and False
 def check_user(session):
     if CAS:
-        cas = CASClient()
-        username, err = CASClient.authenticate(cas, 'netid')
+        username, err = CASClient().authenticate('netid')
         return username, err
     else:
         if 'netid' in session:
@@ -95,8 +94,7 @@ def login_user():
                        "the inconvenience."
 
     if CAS:
-        cas = CASClient()
-        username, err = CASClient.authenticate(cas, 'netid')
+        username, err = CASClient().authenticate('netid')
         if err:
             return redirect(url_for('login', err=username))
         if not isUser(username):

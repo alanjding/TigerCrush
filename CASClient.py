@@ -59,12 +59,12 @@ class CASClient:
     # Authenticate the remote user, and return the user's username.
     # Do not return unless the user is successfully authenticated.
 
-    def authenticate(self):
+    def authenticate(self, des="netid"):
 
         # If the user's username is in the session, then the user was
         # authenticated previously.  So return the user's username.
-        if 'username' in session:
-            return session.get('username')
+        if des in session:
+            return session.get(des), False
 
         # If the request contains a login ticket, then try to
         # validate it.
@@ -74,8 +74,8 @@ class CASClient:
             if username is not None:
                 # The user is authenticated, so store the user's
                 # username in the session.
-                session['username'] = username
-                return username
+                session[des] = username.strip()
+                return session.get(des), False
 
         # The request does not contain a valid login ticket, so
         # redirect the browser to the login page to get one.
@@ -88,10 +88,10 @@ class CASClient:
 
     # Logout the user.
 
-    def logout(self):
+    def logout(self, des="netid"):
 
         # Delete the user's username from the session.
-        session.pop('username')
+        session.pop(des)
 
         # Redirect the browser to the logout page.
         logout_url = self.cas_url + 'logout'
