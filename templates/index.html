@@ -11,7 +11,7 @@
 <body class="bg-light">
  {% include 'nav.html' %}
   <!--------------------------------------------------------------------------->
-  {% if err is defined %}
+  {% if err is defined and is not "" %}
     <div class="py-2">
       <div class="container">
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
