@@ -57,7 +57,7 @@
               <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
               <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> {% if remCrushes == 1 %}crush{% else %}crushes{% endif %}.</p>
               <form id="addCrushForm" action="/addCrush" method="post">
-                <div class="form-row" {% if remCrushes == 0 %}data-toggle="tooltip" title="You can no longer add any more crushes since you either have been matched or reached the limit."{% endif %}>
+                <div class="form-row" {% if remCrushes == 0 %}data-toggle="tooltip" title="You can no longer add any more crushes."{% endif %}>
                   <div class="col-8">
                     <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 %}disabled{% endif %}>
                     <input id="netidStore" type="hidden" name="netid" value="{{ netid }}">
