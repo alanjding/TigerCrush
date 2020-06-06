@@ -163,7 +163,8 @@ def index():
         name = name[0]
 
     if firstTime:
-        # TODO: SEND WELCOME EMAIL
+        # we display a banner about ProofPoint blocking our emails and 
+        # send a welcome email accordingly
         removeFirstTime(netid)
         send_welcome_email(netid)
 
