@@ -29,7 +29,7 @@ Now you are all set up with the GUI!
 ***
 Please install a psycopg2 package which acts as a PosgreSQL connection port. On a MacOS system, you can do this using pip:
 ```
-pip install pycopg2-binary
+pip install psycopg2-binary
 ```
 As the last step, navigate to your TigerCrush working directory. First, edit ```private.py``` according to the instructions in the file and run the ```db_create.py``` using the following:
 ```

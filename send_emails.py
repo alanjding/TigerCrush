@@ -44,3 +44,24 @@ def send_match_email(netid1, netid2):
     print("Email sent! A new match is made <3")
 
 # -------------------------------------------------------------------------------
+# Sends a new user email on first login
+# -------------------------------------------------------------------------------
+
+def send_welcome_email(netid):
+
+    print("First login email code running")
+
+    # construct the email message body
+    with open("first_email.txt", 'r', encoding='utf-8') as template_file:
+        template_file_content = template_file.read()
+        template = Template(template_file_content)
+        message = template.substitute(PERSON=getName(netid).split(",")[0])
+
+    # send the email
+    msg = Message(subject="TigerCrush: Welcome!",
+                  sender=os.environ.get('MAIL_DEFAULT_SENDER'),
+                  recipients=[netid1 + "@princeton.edu"],
+                  body=message)
+    send_async_mail(msg)
+
+    print("Email sent! New user welcomed!")

@@ -6,7 +6,7 @@
 # -------------------------------------------------------------------------------
 
 # The username of the database user (your usr)
-USER = "oleggolev"
+USER = "jerry"
 
 # The password of the user machine for administrative permissions (optional)
 PW = ""
