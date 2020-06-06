@@ -47,13 +47,13 @@ appl.config.update(mail_settings)
 mail = Mail(appl)
 
 # -------------- !!! COMMENT OUT IF RUNNING ON HEROKU !!! -------------- #
-from private import USER, PW, HOST, DB_NAME
-DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
-appl.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+# from private import USER, PW, HOST, DB_NAME
+# DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
+# appl.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 # ---------------------------------------------------------------------- #
 
 # --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
-# appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 # ---------------------------------------------------------------------- #
 
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
