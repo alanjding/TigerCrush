@@ -60,7 +60,7 @@ def send_welcome_email(netid):
     # send the email
     msg = Message(subject="TigerCrush: Welcome!",
                   sender=os.environ.get('MAIL_DEFAULT_SENDER'),
-                  recipients=[netid1 + "@princeton.edu"],
+                  recipients=[netid + "@princeton.edu"],
                   body=message)
     send_async_mail(msg)
 

@@ -165,7 +165,7 @@ def index():
     if firstTime:
         # TODO: SEND WELCOME EMAIL
         removeFirstTime(netid)
-        # send_welcome_email(netid)
+        send_welcome_email(netid)
 
     html = render_template("index.html",
                            netid=netid,
