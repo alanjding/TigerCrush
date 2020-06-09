@@ -2,6 +2,7 @@
 # db_functions.py
 # Authors: Alan Ding   (Princeton '22, CS BSE)
 #          Oleg Golev  (Princeton '22, CS BSE)
+#          Gerald Huang (Princeton '22, ELE BSE)
 #
 # Defines back-end API for enabling dynamic manipulation of the website front end.
 # -------------------------------------------------------------------------------
@@ -23,7 +24,9 @@ from db_models import User, Crush
 # -------------------------------------------------------------------------------
 
 def addUser(netid, name, year):
-    user = User(netid=netid, name=name, year=year, visible=True)
+    # below is my shitty code for the secret admirers issue
+    user = User(netid=netid, name=name, year=year, visible=True, secretAdmirers=0)
+    # user = User(netid=netid, name=name, year=year, visible=True)
     db.session.add(user)
     db.session.commit()
 
@@ -60,7 +63,16 @@ def addCrush(crushing, crushed_on):
     crush = Crush(crushing=crushing, crushed_on=crushed_on)
     db.session.add(crush)
     db.session.commit()
+    # return isMatch(crushing, crushed_on), None
+
+    # below is my shitty code to try to fix the secret admirers issue
+    user = db.session.query(User).filter_by(netid=crushed_on).first()
+    if user is not None and not isMatch(crushing, crushed_on):
+        user.secretAdmirers += 1
+        db.session.commit()
+
     return isMatch(crushing, crushed_on), None
+
 
 # -------------------------------------------------------------------------------
 #                                   isMatch()
@@ -157,7 +169,14 @@ def getMatches(netid):
 # -------------------------------------------------------------------------------
 
 def getRemCrushes(netid):
-    return max(5 + getSecretAdmirers(netid) - len(getCrushes(netid)), 0)
+    # return max(5 + getSecretAdmirers(netid) - len(getCrushes(netid)), 0)
+
+    # here's my shitty code again 
+    user = db.session.query(User).filter_by(netid=netid).first()
+
+    if user is not None:
+        return max(5 + user.secretAdmirers - len(getCrushes(netid)), 0)
+    return 0
 
 # -------------------------------------------------------------------------------
 #                              getSecretAdmirers()

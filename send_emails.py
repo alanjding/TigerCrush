@@ -1,6 +1,7 @@
 # -------------------------------------------------------------------------------
 # send_emails.py
 # Author: Oleg Golev  (Princeton '22, CS BSE)
+#         Gerald Huang (Princeton '22 ELE BSE) 
 #
 # Implements the emailing feature for when matches are found.
 # -------------------------------------------------------------------------------

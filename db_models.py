@@ -1,6 +1,7 @@
 # -------------------------------------------------------------------------------
 # db_models.py
 # Author: Oleg Golev  (Princeton '22, CS BSE)
+#         Gerald Huang (Princeton '22, ELE BSE)
 #
 # Defines database models in SQLAlchemy.
 # -------------------------------------------------------------------------------
@@ -20,8 +21,12 @@ class User(db.Model):
     firstTime = db.Column(db.Boolean, nullable=False, default=True)
     # contact_info = db.Column(JSON)
 
+    # line below is my shitty code to fix the secret admirers problem - Jerry
+    secretAdmirers = db.Column(db.Integer, nullable=False)
+
     def __repr__(self):
         return f"User('{self.netid}', '{self.name}', '{self.year}', Visible: '{self.visible}')"
+        # return f"User('{self.netid}', '{self.name}', '{self.year}', Visible: '{self.visible}')"
 
 # -------------------------------------------------------------------------------
 
