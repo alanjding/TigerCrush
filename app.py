@@ -168,6 +168,9 @@ def index():
         removeFirstTime(netid)
         send_welcome_email(netid)
 
+    import getpass
+    name = getpass.getuser()
+
     html = render_template("index.html",
                            netid=netid,
                            name=name,
@@ -175,7 +178,8 @@ def index():
                            firstTime=firstTime,
                            numSecretAdmirers=numSecretAdmirers,
                            matched=matched,
-                           err=err)
+                           err=err,
+                           env_name=name)
 
     return make_response(html)
 
