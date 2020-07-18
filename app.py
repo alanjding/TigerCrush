@@ -87,18 +87,16 @@ def check_user(session):
 @appl.route('/login_user', methods=['GET'])
 def login_user():
 
-    invalid_user_err = "Unfortunately, your netid cannot be found on the " + \
+    invalid_user_err = "Unfortunately, your netid cannot be found in the " + \
                        "Tigerbook database. TigerCrush currently supports " + \
                        "only listed undergraduates. We will work to " + \
-                       "accomodate more people in the future. Sorry for " + \
+                       "accommodate more people in the future. Sorry for " + \
                        "the inconvenience."
 
     if CAS:
         username, err = CASClient().authenticate('netid')
         if err:
             return redirect(url_for('login', err=username))
-        if not isUser(username):
-            return redirect(url_for('login', err=invalid_user_err))
         return redirect(url_for('index'))
 
     else:
