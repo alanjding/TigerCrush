@@ -148,6 +148,9 @@ def index():
     if err:
         return redirect(url_for('login', err=netid))
 
+    if not isUser(netid):
+        addUser(netid, "no name", 2022)
+
     err = request.args.get('err')
     if err is None:
         err = ""
@@ -278,32 +281,34 @@ def addCrushEndpoint():
 
 # resets the database such that it consists of just a list of students and no
 # crushes between any two students
+from db_models import Crush
+
 @appl.cli.command(name='resetDB')
 def resetDB():
-    print('Deleting existing data... ', end='', flush=True)
+    print('Deleting existing crush data... ', end='', flush=True)
 
     # drop all previous crush data
-    db.drop_all()
-    db.create_all()
+    Crush.__table__.drop(db.engine, checkfirst=True)
+    Crush.__table__.create(db.engine, checkfirst=True)
     db.session.commit()
 
     print('Done!')
-    print('Fetching students from TigerBook... ', end='', flush=True)
-
-    # grab TigerBook data
-    students = getStudents()
-
-    print('Done!')
-    print('Populating database with student data... ', end='', flush=True)
-
-    # create rows in the db for each student
-    for student in students:
-        netid = student['net_id']
-        name = student['full_name']
-        year = student['class_year']
-        addUser(netid, name, year)
-
-    print('Done!')
+    # print('Fetching students from TigerBook... ', end='', flush=True)
+    #
+    # # grab TigerBook data
+    # students = getStudents()
+    #
+    # print('Done!')
+    # print('Populating database with student data... ', end='', flush=True)
+    #
+    # # create rows in the db for each student
+    # for student in students:
+    #     netid = student['net_id']
+    #     name = student['full_name']
+    #     year = student['class_year']
+    #     addUser(netid, name, year)
+    #
+    # print('Done!')
 
 # -------------------------------------------------------------------------------
 

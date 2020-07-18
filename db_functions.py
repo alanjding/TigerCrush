@@ -25,6 +25,7 @@ from db_models import User, Crush
 
 def addUser(netid, name, year):
     # below is my shitty code for the secret admirers issue
+    # your code's not shitty homie ily <3
     user = User(netid=netid, name=name, year=year, visible=True, secretAdmirers=0)
     # user = User(netid=netid, name=name, year=year, visible=True)
     db.session.add(user)
