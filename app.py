@@ -283,6 +283,9 @@ from db_models import Crush
 
 @appl.cli.command(name='resetDB')
 def resetDB():
+    if input('Do you wish to DELETE existing CRUSH DATA? Enter y or n: ') != "y":
+        return
+
     print('Deleting existing crush data... ', end='', flush=True)
 
     # drop all previous crush data
@@ -290,23 +293,40 @@ def resetDB():
     Crush.__table__.create(db.engine, checkfirst=True)
     db.session.commit()
 
+    print('Done!\n')
+
+    print('Trying to fetch students from TigerBook...', flush=True)
+
+    # grab TigerBook data
+    students = getStudents()
+
+    print('Here is a snapshot of what TigerBook returned:')
+    print(students[0:5])
+    print()
+
+    if input('Would you like to proceed with DELETING existing STUDENT DATA ' +
+             'and REPOPULATING the database with what TigerBook returned? ' +
+             'Enter y or n: ') != "y":
+        print('resetDB exited: crush data cleared, student data untouched')
+        return
+
+    print('Deleting existing student data... ', end='', flush=True)
+
+    db.drop_all()
+    db.session.commit()
+
     print('Done!')
-    # print('Fetching students from TigerBook... ', end='', flush=True)
-    #
-    # # grab TigerBook data
-    # students = getStudents()
-    #
-    # print('Done!')
-    # print('Populating database with student data... ', end='', flush=True)
-    #
-    # # create rows in the db for each student
-    # for student in students:
-    #     netid = student['net_id']
-    #     name = student['full_name']
-    #     year = student['class_year']
-    #     addUser(netid, name, year)
-    #
-    # print('Done!')
+
+    print('Populating database with student data... ', end='', flush=True)
+
+    # create rows in the db for each student
+    for student in students:
+        netid = student['net_id']
+        name = student['full_name']
+        year = student['class_year']
+        addUser(netid, name, year)
+
+    print('Done!')
 
 # -------------------------------------------------------------------------------
 
