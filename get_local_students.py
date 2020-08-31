@@ -14,12 +14,19 @@ def getLocalStudents():
                    '/div[@class="card-body text-left pl-0 pt-1 student-list"]' +
                    '/div/a/text()')
 
-    name = [s.split(" '")[0] for s in name_and_year]
-    year = [s.split(" '")[1] for s in name_and_year]
+    name = [" '".join(s.split(" '")[0:-1]) for s in name_and_year]
+    year = [s.split(" '")[-1] for s in name_and_year]
     netid = [email.split("@")[0] for email in emails]
 
     # construct and return data structure (list of dictionaries)
     if len(name) != len(year) or len(year) != len(netid):
         return
 
-getLocalStudents()
+    result = []
+    for i in range(len(name)):
+        entry = {'net_id': netid[i], 'full_name': name[i], 'class_year': '20' + year[i]}
+        result.append(entry)
+
+    return result
+
+print(getLocalStudents())
