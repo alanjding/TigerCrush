@@ -280,6 +280,7 @@ def addCrushEndpoint():
 # resets the database such that it consists of just a list of students and no
 # crushes between any two students
 from db_models import Crush
+from get_local_students import getLocalStudents
 
 @appl.cli.command(name='resetDB')
 def resetDB():
@@ -307,7 +308,62 @@ def resetDB():
     if input('Would you like to proceed with DELETING existing STUDENT DATA ' +
              'and REPOPULATING the database with what TigerBook returned? ' +
              'Enter y or n: ') != "y":
-        print('resetDB exited: crush data cleared, student data untouched')
+        print('resetDB exited: crush data cleared, existing student data untouched')
+        return
+
+    print('Deleting existing student data... ', end='', flush=True)
+
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
+
+    print('Done!')
+
+    print('Populating database with student data... ', end='', flush=True)
+
+    # create rows in the db for each student
+    for student in students:
+        netid = student['net_id']
+        name = student['full_name']
+        year = student['class_year']
+        addUser(netid, name, year)
+
+    print('Done!')
+
+# -------------------------------------------------------------------------------
+
+# reset the database and use local data in students.json to repopulate it
+@appl.cli.command(name='resetDBLocal')
+def resetDBLocal():
+    if input('Do you wish to DELETE existing CRUSH DATA? Enter y or n: ') != "y":
+        return
+
+    print('Deleting existing crush data... ', end='', flush=True)
+
+    # drop all previous crush data
+    Crush.__table__.drop(db.engine, checkfirst=True)
+    Crush.__table__.create(db.engine, checkfirst=True)
+    db.session.commit()
+
+    print('Done!\n')
+
+    print('Trying to fetch students from TigerBook...', flush=True)
+
+    # grab local student data
+    students = getLocalStudents()
+    if students is None:
+        print('Failed to fetch students from local data.')
+        print('resetDB exited: crush data cleared, existing student data untouched')
+        return
+
+    print('Here is a snapshot of what TigerBook returned:')
+    print(students[0:5])
+    print()
+
+    if input('Would you like to proceed with DELETING existing STUDENT DATA ' +
+             'and REPOPULATING the database with what TigerBook returned? ' +
+             'Enter y or n: ') != "y":
+        print('resetDB exited: crush data cleared, existing student data untouched')
         return
 
     print('Deleting existing student data... ', end='', flush=True)
