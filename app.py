@@ -221,6 +221,8 @@ def studentInfo():
 
 # gets and formats (into a list of strings to be displayed) the crushes
 # for the user with the specified netid
+
+# TODO: SECURE THIS API ENDPOINT (make sure logged in netid is the same as param netid)
 @appl.route('/getCrushes')
 def crushes():
 
@@ -236,6 +238,8 @@ def crushes():
 
 # gets and formats (into a list of strings to be displayed) the matches
 # for the user with the specified netid
+
+# TODO: SECURE THIS API ENDPOINT (make sure logged in netid is the same as param netid)
 @appl.route('/getMatches')
 def matches():
 
@@ -251,6 +255,8 @@ def matches():
 # -----------------------------------------------------------------------
 
 # adds a crush (crushNetid arg) for a given user (netid arg)
+
+# TODO: SECURE THIS API ENDPOINT (make sure logged in netid is the same as param netid)
 @appl.route('/addCrush', methods=['GET', 'POST'])
 def addCrushEndpoint():
 
@@ -296,12 +302,12 @@ def resetDB():
 
     print('Done!\n')
 
-    # print('Trying to fetch students from TigerBook...', flush=True)
-    print('Trying to fetch students locally...', flush=True)
+    print('Trying to fetch students from TigerBook...', flush=True)
+    # print('Trying to fetch students locally...', flush=True)
 
     # grab data
-    # students = getStudents()
-    students = getLocalStudents()
+    students = getStudents()
+    # students = getLocalStudents()
 
     print('Here is a snapshot of what was returned:')
     print(students[0:5])
