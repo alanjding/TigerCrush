@@ -327,7 +327,6 @@ def resetDB():
     print('Deleting existing student data... ', end='', flush=True)
 
     db.drop_all()
-    db.create_all()
     db.session.commit()
 
     print('Done!')
