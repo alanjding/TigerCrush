@@ -64,6 +64,7 @@ from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers, \
     getFormattedStudentInfoList, getCrushes, getMatches, getName, isUser, \
     isFirstTime, removeFirstTime
 from send_emails import send_match_email, send_welcome_email
+from get_local_students import getLocalStudents
 
 # -----------------------------------------------------------------------
 #                           AUTHENTICATION
@@ -295,12 +296,14 @@ def resetDB():
 
     print('Done!\n')
 
-    print('Trying to fetch students from TigerBook...', flush=True)
+    # print('Trying to fetch students from TigerBook...', flush=True)
+    print('Trying to fetch students locally...', flush=True)
 
-    # grab TigerBook data
-    students = getStudents()
+    # grab data
+    # students = getStudents()
+    students = getLocalStudents()
 
-    print('Here is a snapshot of what TigerBook returned:')
+    print('Here is a snapshot of what was returned:')
     print(students[0:5])
     print()
 
