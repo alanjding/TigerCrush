@@ -221,45 +221,44 @@ def studentInfo():
 
 # gets and formats (into a list of strings to be displayed) the crushes
 # for the user with the specified netid
-
-# TODO: SECURE THIS API ENDPOINT (make sure logged in netid is the same as param netid)
 @appl.route('/getCrushes')
 def crushes():
-
     # validate the current user session
     netid, err = check_user(session)
     if err:
         return redirect(url_for('login', err=netid))
 
-    crushList = getCrushes(request.args.get('netid'))
+    url_netid = request.args.get('netid')
+    if netid != url_netid:
+        return {'data': []}
+
+    crushList = getCrushes(netid)
     return {'data': [getName(crush.crushed_on) for crush in crushList]}
 
 # -----------------------------------------------------------------------
 
 # gets and formats (into a list of strings to be displayed) the matches
 # for the user with the specified netid
-
-# TODO: SECURE THIS API ENDPOINT (make sure logged in netid is the same as param netid)
 @appl.route('/getMatches')
 def matches():
-
     # validate the current user session
     netid, err = check_user(session)
     if err:
         return redirect(url_for('login', err=netid))
 
-    matchList = getMatches(request.args.get('netid'))
+    url_netid = request.args.get('netid')
+    if netid != url_netid:
+        return {'data': []}
+
+    matchList = getMatches(netid)
     return {'data': ['%s (%s@princeton.edu)' % (getName(match), match)
                      for match in matchList]}
 
 # -----------------------------------------------------------------------
 
-# adds a crush (crushNetid arg) for a given user (netid arg)
-
-# TODO: SECURE THIS API ENDPOINT (make sure logged in netid is the same as param netid)
+# adds a crush (crushNetid arg) for a given user (netid)
 @appl.route('/addCrush', methods=['GET', 'POST'])
 def addCrushEndpoint():
-
     # validate the current user session
     netid, err = check_user(session)
     if err:
