@@ -280,7 +280,6 @@ def addCrushEndpoint():
 # resets the database such that it consists of just a list of students and no
 # crushes between any two students
 from db_models import Crush
-from get_local_students import getLocalStudents
 
 @appl.cli.command(name='resetDB')
 def resetDB():
@@ -296,37 +295,25 @@ def resetDB():
 
     print('Done!\n')
 
-    local = input('Fetch from TigerBook (input y) or locally (input n)? ')
-    students = None
+    print('Trying to fetch students from TigerBook...', flush=True)
 
-    if local == 'y':
-        print('Trying to fetch students from TigerBook...', flush=True)
+    # grab TigerBook data
+    students = getStudents()
 
-        # grab TigerBook data
-        students = getStudents()
-
-    else:
-        # grab local student data
-        students = getLocalStudents()
-        if students is None:
-            print('Failed to fetch students from local data.')
-            print(
-                'resetDB exited: crush data cleared, existing student data untouched')
-            return
-
-    print('Here is a snapshot of what was returned:')
+    print('Here is a snapshot of what TigerBook returned:')
     print(students[0:5])
     print()
 
     if input('Would you like to proceed with DELETING existing STUDENT DATA ' +
              'and REPOPULATING the database with what TigerBook returned? ' +
              'Enter y or n: ') != "y":
-        print('resetDB exited: crush data cleared, existing student data untouched')
+        print('resetDB exited: crush data cleared, student data untouched')
         return
 
     print('Deleting existing student data... ', end='', flush=True)
 
     db.drop_all()
+    db.create_all()
     db.session.commit()
 
     print('Done!')
