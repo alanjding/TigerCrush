@@ -145,14 +145,10 @@ def index():
     # validate the current user session
     netid, err = check_user(session)
     if err:
-        return redirect(url_for('login', err='CAS authentication failed.'))
+        return redirect(url_for('login', err=netid))
 
     if not isUser(netid):
-        return redirect(url_for('login',
-            err="Sorry! We couldn't find your netid in the TigerBook database. " +
-                "If you are a graduate student, you are not in this database, but " +
-                "if the demand is there, we will look into making this " +
-                "application available to you!"))
+        addUser(netid, "no name", 2022)
 
     err = request.args.get('err')
     if err is None:
