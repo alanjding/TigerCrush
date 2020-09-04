@@ -370,6 +370,16 @@ def userStats():
 
 # -------------------------------------------------------------------------------
 
+@appl.cli.command(name='usageStats')
+def usageStats():
+    num_users = db.session.query(User).count()
+    num_crushes = db.session.query(Crush).count()
+    print('User table size: ' + str(num_users))
+    print('Crush table size: ' + str(num_crushes))
+    print('Remaining capacity: ' + str(10000 - num_users - num_crushes))
+
+# -------------------------------------------------------------------------------
+
 # helper function that returns a Python dict of data grabbed from TigerBook
 def getStudents():
     url = 'https://tigerbook.herokuapp.com/api/v1/undergraduates'
