@@ -359,12 +359,10 @@ def resetDB():
 def userStats():
     netid = input('netid of user to be checked: ')
     user = User.query.filter_by(netid=netid).one()
-    crushes = Crush.query.filter_by(crushing=netid).all()
-    crushed_on = Crush.query.filter_by(crushed_on=netid).all()
 
     print()
-    print('First time? ' + user.firstTime)
-    print('Max number of secret admirers: ' + user.secretAdmirers)
+    print('First time? ' + str(user.firstTime))
+    print('Max number of secret admirers: ' + str(user.secretAdmirers))
 
     print()
     curr_secret_admirers = getSecretAdmirers(netid)
