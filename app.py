@@ -374,8 +374,11 @@ def userStats():
 def usageStats():
     num_users = db.session.query(User).count()
     num_crushes = db.session.query(Crush).count()
+    num_loggedin_users = db.session.query(User).filter_by(firstTime=False).count()
+
     print('User table size: ' + str(num_users))
     print('Crush table size: ' + str(num_crushes))
+    print('Number of users who have logged in at least once: ' + str(num_loggedin_users))
     print('Remaining capacity: ' + str(10000 - num_users - num_crushes))
 
 # -------------------------------------------------------------------------------
