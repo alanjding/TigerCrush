@@ -285,7 +285,7 @@ def addCrushEndpoint():
 
 # resets the database such that it consists of just a list of students and no
 # crushes between any two students
-from db_models import Crush
+from db_models import Crush, User
 from sqlalchemy import or_
 
 @appl.cli.command(name='resetDB')
@@ -351,6 +351,24 @@ def resetDB():
         addUser(netid, name, year)
 
     print('Done!')
+
+# -------------------------------------------------------------------------------
+
+# ONLY USE ON OTHER USERS WITH THEIR PERMISSION AND FOR TESTING PURPOSES
+@appl.cli.command(name='userStats')
+def userStats():
+    netid = input('netid of user to be checked: ')
+    user = User.query.filter_by(netid=netid).one()
+    crushes = Crush.query.filter_by(crushing=netid).all()
+    crushed_on = Crush.query.filter_by(crushed_on=netid).all()
+
+    print()
+    print('First time? ' + user.firstTime)
+    print('Max number of secret admirers: ' + user.secretAdmirers)
+
+    print()
+    curr_secret_admirers = getSecretAdmirers(netid)
+    print(curr_secret_admirers)
 
 # -------------------------------------------------------------------------------
 
