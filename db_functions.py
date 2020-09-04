@@ -69,7 +69,7 @@ def addCrush(crushing, crushed_on):
     # below is my shitty code to try to fix the secret admirers issue
     user = db.session.query(User).filter_by(netid=crushed_on).first()
     if user is not None and not isMatch(crushing, crushed_on):
-        user.secretAdmirers += 1
+        user.secretAdmirers = max(user.secretAdmirers, getSecretAdmirers(user))
         db.session.commit()
 
     return isMatch(crushing, crushed_on), None
