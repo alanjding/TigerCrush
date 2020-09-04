@@ -286,13 +286,15 @@ def addCrushEndpoint():
 # resets the database such that it consists of just a list of students and no
 # crushes between any two students
 from db_models import Crush
+from sqlalchemy import or_
 
 @appl.cli.command(name='resetDB')
 def resetDB():
     if input("Do you wish to DELETE the DEVELOPERS' CRUSH DATA? Enter y or n: ") != 'y':
         return
 
-    dev_crushes = Crush.query.filter(Crush.crushing == 'ajding').all()
+    devs = ['ajding', 'gh14', 'ogolev']
+    dev_crushes = Crush.query.filter(or_(Crush.crushing == x for x in devs)).all()
     print(dev_crushes)
 
     if input('Do you wish to DELETE ALL existing CRUSH DATA? Enter y or n: ') != 'y':
