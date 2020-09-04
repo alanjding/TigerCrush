@@ -289,10 +289,16 @@ from db_models import Crush
 
 @appl.cli.command(name='resetDB')
 def resetDB():
-    if input('Do you wish to DELETE existing CRUSH DATA? Enter y or n: ') != "y":
+    if input("Do you wish to DELETE the DEVELOPERS' CRUSH DATA? Enter y or n: ") != 'y':
         return
 
-    print('Deleting existing crush data... ', end='', flush=True)
+    dev_crushes = Crush.query.filter_by(crushing='ajding')
+    print(dev_crushes)
+
+    if input('Do you wish to DELETE ALL existing CRUSH DATA? Enter y or n: ') != 'y':
+        return
+
+    print('Deleting all existing crush data... ', end='', flush=True)
 
     # drop all previous crush data
     Crush.__table__.drop(db.engine, checkfirst=True)
