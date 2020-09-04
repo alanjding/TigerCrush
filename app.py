@@ -292,9 +292,7 @@ def resetDB():
     if input("Do you wish to DELETE the DEVELOPERS' CRUSH DATA? Enter y or n: ") != 'y':
         return
 
-    dev_crushes = Crush.query.filter(Crush.crushing == 'ajding' or
-                                     Crush.crushing == 'gh14' or
-                                     Crush.crushing == 'ogolev').all()
+    dev_crushes = Crush.query.filter(Crush.crushing == 'ajding').all()
     print(dev_crushes)
 
     if input('Do you wish to DELETE ALL existing CRUSH DATA? Enter y or n: ') != 'y':
