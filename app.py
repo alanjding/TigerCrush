@@ -296,7 +296,7 @@ def resetDB():
     devs = ['ajding', 'gh14', 'ogolev']
     dev_crushes = Crush.query.filter(or_(Crush.crushing == x for x in devs))
     print(dev_crushes.all())
-    db.session.delete(dev_crushes)
+    dev_crushes.delete()
     db.session.commit()
 
     print('Done! Updated dev crush query returned: ')
