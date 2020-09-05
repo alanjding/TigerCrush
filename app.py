@@ -145,10 +145,14 @@ def index():
     # validate the current user session
     netid, err = check_user(session)
     if err:
-        return redirect(url_for('login', err=netid))
+        return redirect(url_for('login', err='CAS authentication failed.'))
 
     if not isUser(netid):
-        addUser(netid, "no name", 2022)
+        return redirect(url_for('login', err="Sorry! Looks like you are not an undergraduate student. " +
+                                             "This app is currently only available to undergraduates. " +
+                                             "If enough graduate students are interested in using this " +
+                                             "app, we will look into implementing that functionality " +
+                                             "at a later point!"))
 
     err = request.args.get('err')
     if err is None:
