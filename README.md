@@ -4,6 +4,11 @@ The one and only Tinder-defying application specifically for Princeton students.
 
 This app is a revival of the old GoodCrush platform, the brainchild of Josh Weinstein '09. It retains very similar functionality, allowing students to indicate as many crushes as they wish, and contacting two matched students if and only if the first student put down the second as a crush and vice versa. Users will also be able to see the number of students crushing on them whom they did not indicate to be a crush of their own. No "missed connection" feature is planned, since we believe Tiger Confessions++ serves that purpose already. Princeton students must log on with Princeton's CAS (Central Authentication Service), so the platform is closed to Princeton students only.
 
+Features to be implemented in the next release:
+- Add a random delay before sending an email/displaying a match so that users can't tell who was the one to "choose first"
+- Add functionality for secret admirer messages: when you add a crush, you can also send a short message along to the person you're crushing on and the message will appear in the crushed on user's secret admirer message logs
+- Display total number of crushes reported
+
 ## Local PostgreSQL Setup:
 In order to properly use a PostgreSQL database and therefore the application on your machine, you must have a local PostgreSQL server and a GUI of your choice for editing and accessing your databases interactively.
 

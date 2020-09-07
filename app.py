@@ -387,6 +387,20 @@ def usageStats():
 
 # -------------------------------------------------------------------------------
 
+@appl.cli.command(name='addUser')
+def add_user():
+    netid = input("netid: ")
+    name = input("name: ")
+    year = input("class year: ")
+
+    if input("confirm (y/n): ") != 'y':
+        return
+
+    addUser(netid, name, year)
+    print("New user successfully added!")
+
+# -------------------------------------------------------------------------------
+
 # helper function that returns a Python dict of data grabbed from TigerBook
 def getStudents():
     url = 'https://tigerbook.herokuapp.com/api/v1/undergraduates'
