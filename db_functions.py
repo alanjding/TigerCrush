@@ -154,8 +154,8 @@ def getMatches(netid):
     matches = list(set(myCrushes) & set(crushingOnMe))
 
     # for debugging purposes only! delete later
-    print('matches:')
-    print(matches)
+    # print('matches:')
+    # print(matches)
     return matches
 
 # -------------------------------------------------------------------------------
