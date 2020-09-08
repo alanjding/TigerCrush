@@ -101,8 +101,8 @@ def isMatch(netid1, netid2):
 
 def getCrushes(netid):
     crushes = Crush.query.filter_by(crushing=netid).all()
-    print('crushes:')
-    print(crushes)
+    # print('crushes:')
+    # print(crushes)
     return crushes
 
 # -------------------------------------------------------------------------------
@@ -190,22 +190,22 @@ def getRemCrushes(netid):
 
 def getSecretAdmirers(netid):
     myCrushes = getCrushNames(netid)
-    print('my crushes:')
-    print(myCrushes)
+    # print('my crushes:')
+    # print(myCrushes)
 
     crushingOnMeRows = db.session.query(Crush) \
         .filter_by(crushed_on=netid) \
         .all()
 
     crushingOnMe = [crush.crushing for crush in crushingOnMeRows]
-    print('crushing on me:')
-    print(crushingOnMe)
+    # print('crushing on me:')
+    # print(crushingOnMe)
 
     secretAdmirers = list(set(crushingOnMe) - set(myCrushes))
 
     # all prints for debugging purposes only! delete later
-    print('secret admirers:')
-    print(secretAdmirers)
+    # print('secret admirers:')
+    # print(secretAdmirers)
     return len(secretAdmirers)
 
 # -------------------------------------------------------------------------------
