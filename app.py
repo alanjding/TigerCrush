@@ -376,13 +376,16 @@ def userStats():
 
 @appl.cli.command(name='usageStats')
 def usageStats():
-    num_users = db.session.query(User).count()
+    users = db.session.query(User)
+    num_users = users.count()
     num_crushes = db.session.query(Crush).count()
     num_loggedin_users = db.session.query(User).filter_by(firstTime=False).count()
+    num_ppl_matched = sum(len(getMatches(user.netid)) for user in users)
 
     print('User table size: ' + str(num_users))
     print('Crush table size: ' + str(num_crushes))
     print('Number of users who have logged in at least once: ' + str(num_loggedin_users))
+    print('Number of people matched: ' + str(num_ppl_matched))
     print('Remaining capacity: ' + str(10000 - num_users - num_crushes))
 
 # -------------------------------------------------------------------------------

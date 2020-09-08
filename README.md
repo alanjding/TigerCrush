@@ -8,6 +8,9 @@ Features to be implemented in the next release:
 - Add a random delay before sending an email/displaying a match so that users can't tell who was the one to "choose first"
 - Add functionality for secret admirer messages: when you add a crush, you can also send a short message along to the person you're crushing on and the message will appear in the crushed on user's secret admirer message logs
 - Display total number of crushes reported
+- Auto-redirect to index if already logged in
+- Manually add name/year if not in the database
+- Add number of matches in usageStats script
 
 ## Local PostgreSQL Setup:
 In order to properly use a PostgreSQL database and therefore the application on your machine, you must have a local PostgreSQL server and a GUI of your choice for editing and accessing your databases interactively.
