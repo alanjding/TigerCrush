@@ -374,6 +374,7 @@ def userStats():
 
 # -------------------------------------------------------------------------------
 
+# dummy inefficient lol
 @appl.cli.command(name='usageStats')
 def usageStats():
     users = db.session.query(User)
@@ -385,7 +386,7 @@ def usageStats():
     print('User table size: ' + str(num_users))
     print('Crush table size: ' + str(num_crushes))
     print('Number of users who have logged in at least once: ' + str(num_loggedin_users))
-    print('Number of people matched: ' + str(num_matches))
+    print('Number of matched edges: ' + str(num_matches))
     print('Remaining capacity: ' + str(10000 - num_users - num_crushes))
 
 # -------------------------------------------------------------------------------
