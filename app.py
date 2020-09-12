@@ -269,7 +269,6 @@ def matches():
 
 # adds a crush (crushNetid arg) for a given user (netid)
 @appl.route('/addCrush', methods=['GET', 'POST'])
-@csrf.exempt # for testing only!!!
 def addCrushEndpoint():
     # validate the current user session
     netid, err = check_user(session)
