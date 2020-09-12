@@ -61,6 +61,7 @@
                   <div class="col-8">
                     <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 %}disabled{% endif %}>
                     <input id="netidStore" type="hidden" name="netid" value="{{ netid }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                   </div>
                   <div class="col-4">
                     <span class="float-right">
