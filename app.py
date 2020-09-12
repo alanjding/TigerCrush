@@ -139,6 +139,41 @@ def login():
 
 # -----------------------------------------------------------------------
 
+@appl.route('/register')
+def register():
+
+    netid, err = check_user(session)
+    if err:
+        return redirect(url_for('login', err='CAS authentication failed.'))
+
+    if isUser(netid):
+        return redirect(url_for('index'), err="Already registered.")
+
+    html = render_template("register.html")
+    return make_response(html)
+
+# -----------------------------------------------------------------------
+
+@appl.route('/register_user')
+def register_user():
+
+    netid, err = check_user(session)
+    if err:
+        return redirect(url_for('login', err='CAS authentication failed.'))
+
+    if isUser(netid):
+        return redirect(url_for('index'), err="Already registered.")
+
+    first_name = request.args.get('first-name')
+    last_name = request.args.get('last-name')
+    class_year = request.args.get('class-year')
+
+    addUser(netid, " ".join(first_name, last_name), class_year)
+
+    return redirect(url_for('index', err='Congratulations! You can now use TigerCrush!'))
+
+# -----------------------------------------------------------------------
+
 @appl.route('/index')
 def index():
 
@@ -148,11 +183,8 @@ def index():
         return redirect(url_for('login', err='CAS authentication failed.'))
 
     if not isUser(netid):
-        return redirect(url_for('login', err="Sorry! Looks like you are not an undergraduate student. " +
-                                             "This app is currently only available to undergraduates. " +
-                                             "If enough graduate students are interested in using this " +
-                                             "app, we will look into implementing that functionality " +
-                                             "at a later point!"))
+        # redirect them to a different form page to enter information about themselves
+        return redirect(url_for('register'))
 
     err = request.args.get('err')
     if err is None:
