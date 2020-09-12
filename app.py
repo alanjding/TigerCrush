@@ -10,6 +10,7 @@
 from flask import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_wtf.csrf import CSRFProtect
 from CASClient import CASClient
 from sys import argv, stderr
 import os
@@ -59,6 +60,9 @@ appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(appl, engine_options={'pool_pre_ping': True, 'pool_size': 20, 'max_overflow': 0})
+
+csrf = CSRFProtect(appl)
+csrf.init_app(appl)
 
 from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers, \
     getFormattedStudentInfoList, getCrushes, getMatches, getName, isUser, \
@@ -212,6 +216,7 @@ def whitelist():
 
 # helper endpoint that returns formatted Tigerbook data
 @appl.route('/studentInfo')
+@csrf.exempt
 def studentInfo():
 
     # validate the current user session
@@ -226,6 +231,7 @@ def studentInfo():
 # gets and formats (into a list of strings to be displayed) the crushes
 # for the user with the specified netid
 @appl.route('/getCrushes')
+@csrf.exempt
 def crushes():
     # validate the current user session
     netid, err = check_user(session)
@@ -244,6 +250,7 @@ def crushes():
 # gets and formats (into a list of strings to be displayed) the matches
 # for the user with the specified netid
 @appl.route('/getMatches')
+@csrf.exempt
 def matches():
     # validate the current user session
     netid, err = check_user(session)
@@ -262,6 +269,7 @@ def matches():
 
 # adds a crush (crushNetid arg) for a given user (netid)
 @appl.route('/addCrush', methods=['GET', 'POST'])
+@csrf.exempt # for testing only!!!
 def addCrushEndpoint():
     # validate the current user session
     netid, err = check_user(session)
