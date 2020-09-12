@@ -130,7 +130,6 @@ def redirectHTTP():
 #                         PAGE ROUTING SECTION
 # -----------------------------------------------------------------------
 
-@appl.route('/')
 @appl.route('/login')
 def login():
 
@@ -143,13 +142,14 @@ def login():
 
 # -----------------------------------------------------------------------
 
+@appl.route('/')
 @appl.route('/index')
 def index():
 
     # validate the current user session
     netid, err = check_user(session)
     if err:
-        return redirect(url_for('login', err='CAS authentication failed.'))
+        return redirect(url_for('login'))
 
     if not isUser(netid):
         return redirect(url_for('login', err="Sorry! Looks like you are not an undergraduate student. " +
