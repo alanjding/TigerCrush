@@ -203,7 +203,6 @@ def getSecretAdmirers(netid):
 
     secretAdmirers = list(set(crushingOnMe) - set(myCrushes))
 
-    # all prints for debugging purposes only! delete later
     # print('secret admirers:')
     # print(secretAdmirers)
     return len(secretAdmirers)
