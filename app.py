@@ -320,6 +320,8 @@ def resetDB():
 
     print('Deleting all existing crush data... ', end='', flush=True)
 
+    db.session.commit()
+
     # drop all previous crush data
     Crush.__table__.drop(db.engine, checkfirst=True)
     Crush.__table__.create(db.engine, checkfirst=True)
