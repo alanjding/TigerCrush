@@ -325,6 +325,12 @@ def resetDB():
     Crush.__table__.create(db.engine, checkfirst=True)
     db.session.commit()
 
+    # reset secret admirer counts back to 0
+    rows = db.session.query(User).all()
+    for r in rows:
+        r.secretAdmirers = 0
+    db.session.commit()
+
     print('Done!\n')
 
     print('Trying to fetch students from TigerBook...', flush=True)
