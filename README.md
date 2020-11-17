@@ -6,7 +6,7 @@ This app is a revival of the old GoodCrush platform, the brainchild of Josh Wein
 
 Features to be implemented in the next release (descending prio):
 - Add functionality for secret admirer messages: when you add a crush, you can also send a short message along to the person you're crushing on and the message will appear in the crushed on user's secret admirer message logs/email (this would require a database migration - implementation would be to add a string column in the crush (edge) table)
-- Email notification options for secret admirers and matches
+- Email notification options for secret admirers and matches (again, will need database migration)
 - Modify unable to login error message - tell undergraduates that can't log in to email tigercrushfeedback@gmail.com with their name, netid, and graduation year so that we can add them in manually.
 - Add a random delay before sending an email/displaying a match so that users can't tell who was the one to "choose first" (look into Heroku Scheduler dyno)
 
