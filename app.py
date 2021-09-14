@@ -439,8 +439,9 @@ def getStudents():
             created)
     }
 
-    r = requests.get(url, headers=headers)
-    return json.loads(r.text)
+    r = requests.get(url, headers=headers).text
+    print(r[:100])
+    return json.loads(r)
 
 # -----------------------------------------------------------------------
 #                            MAIN METHOD
