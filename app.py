@@ -440,7 +440,7 @@ def getStudents():
     }
 
     r = requests.get(url, headers=headers).text
-    print(r[:100])
+    print(r[:1000], flush=True)
     return json.loads(r)
 
 # -----------------------------------------------------------------------
