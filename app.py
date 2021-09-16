@@ -66,7 +66,7 @@ csrf.init_app(appl)
 
 from db_functions import addUser, addCrush, getRemCrushes, getSecretAdmirers, \
     getFormattedStudentInfoList, getCrushes, getMatches, getName, isUser, \
-    isFirstTime, removeFirstTime
+    isFirstTime, removeFirstTime, removeUser
 from send_emails import send_match_email, send_welcome_email
 from get_local_students import getLocalStudents
 
@@ -417,6 +417,18 @@ def add_user():
 
     addUser(netid, name, year)
     print("New user successfully added!")
+
+# -------------------------------------------------------------------------------
+
+@appl.cli.command(name='removeUser')
+def remove_user():
+    netid = input("netid: ")
+
+    if input("confirm (y/n): ") != 'y':
+        return
+
+    removeUser(netid)
+    print("User successfully removed!")
 
 # -------------------------------------------------------------------------------
 

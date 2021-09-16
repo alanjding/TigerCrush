@@ -32,6 +32,19 @@ def addUser(netid, name, year):
     db.session.commit()
 
 # -------------------------------------------------------------------------------
+#                                 addUser()
+# -------------------------------------------------------------------------------
+# Removes a user from the database
+#
+# Upon success, return 0. Upon failure, print a descriptive error and return a
+# user-readable error to display on the web page.
+# -------------------------------------------------------------------------------
+
+def removeUser(netid):
+    User.query.filter_by(netid=netid).delete()
+    db.session.commit()
+
+# -------------------------------------------------------------------------------
 #                                 addCrush()
 # -------------------------------------------------------------------------------
 # Take two netid's represented as strings to add a new entry to the crush table.
