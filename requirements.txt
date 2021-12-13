@@ -13,4 +13,4 @@ Flask-Mail==0.9.1
 Flask-WTF==0.14.3
 gunicorn==20.0.4
 suds-community==0.8.4
-lxml==4.5.2
+lxml==4.6.5
